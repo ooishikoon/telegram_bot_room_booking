@@ -5,10 +5,10 @@
 | No. | Photo                                      | Name                  | Matric Number | Semester | Phone Number |
 | ------------- |--------------------------------------------|-----------------------|---------------|----------|--------------|
 |1.|                                            |                       |               |          |              |
-|2.| <img src= "images/shi_koon.jpg" width=100> | Ooi Shi Koon          | 277290        | 5        | 017-5774491  |
-|3.| <img src= "images/fanny.jpg" width=100>    | Fanny Tang Tung Huong | 278366        | 5        | 011-51103470 |
-|4.| <img src= "images/zhun wei.JPG" width=100> | Lim Zhun Wei          | 279632        | 5        | 014-7461218  |
-|5.|                                            |                       |               |          |              |
+|2.|                                            |                       |               |          |              |
+|3.| <img src= "images/shi_koon.jpg" width=100> | Ooi Shi Koon          | 277290        | 5        | 017-5774491  |
+|4.| <img src= "images/fanny.jpg" width=100>    | Fanny Tang Tung Huong | 278366        | 5        | 011-51103470 |
+|5.| <img src= "images/zhun_wei.JPG" width=100> | Lim Zhun Wei          | 279632        | 5        | 014-7461218  |
 
 ## Title of your application
 ## Introduction
