@@ -10,7 +10,7 @@
 |1.|<img src="Photo/yuen_photo.jpeg" width=100> | Wong Chun Yuen | 278820 | 1 | Bachelor of Science with Honours (Information Technology) |
 |2.|<img src= "Photo/profilepic.jpeg" width=100> | Ho Pin Xian  | 271760  | 3 | Bachelor of Science with Honours (Business Mathematics)  |
 |3.|<img src= "Photo/Re%20Jie.passport%20photo.JPG" width=100>  | Wong Re Jie | 277741 | 1 | Bachelor of Science with Honours (Information Technology) |
-|4.|<img src= "images/zhunwei.JPG" width=100>| Lim Zhun Wei | 279632  | 5 | Bachelor of Science with Honours (Information Technology)  |
+|4.|<img src= "images/zhun wei.JPG" width=100>| Lim Zhun Wei | 279632  | 5 | Bachelor of Science with Honours (Information Technology)  |
 |5.|<img src= "Photo/Passport%20pic.JPG" width=100>| Teoh Tze En  | 254275  | 7 | Bachelor of Business Administration (BBA) |
 
 ## Title of your application
