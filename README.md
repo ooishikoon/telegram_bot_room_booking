@@ -2,13 +2,13 @@
 [Read the instruction](https://github.com/STIW3054-A221/class-activity-soc/blob/main/GroupProject.md)
 
 ## Group Info:
-| No. | Photo | Name | Matric Number  | Semester  | Phone Number  |
-| ------------- | ------------- | ------------- | ------------- | ------------- | ------------- |
-|1.| |  |  |  |  |
-|2.| |   |   |  |   |
-|3.| |  |  |  |  |
-|4.|<img src= "images/zhun wei.JPG" width=100>| Lim Zhun Wei | 279632  | 5 | 014-7461218  |
-|5.| |  |   |  |  |
+| No. | Photo                                      | Name                  | Matric Number | Semester | Phone Number |
+| ------------- |--------------------------------------------|-----------------------|---------------|----------|--------------|
+|1.|                                            |                       |               |          |              |
+|2.|                                            |                       |               |          |              |
+|3.| <img src= "images/fanny.jpg" width=100>    | FANNY TANG TUNG HUONG | 278366        | 5        | 011-51103470 |
+|4.| <img src= "images/zhun wei.JPG" width=100> | Lim Zhun Wei          | 279632        | 5        | 014-7461218  |
+|5.|                                            |                       |               |          |              |
 
 ## Title of your application
 ## Introduction
