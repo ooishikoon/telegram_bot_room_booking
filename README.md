@@ -5,6 +5,13 @@
 1. Matric Number & Name & Photo & Phone Number
 1. Mention who is the leader.
 1. Other related info (if any)
+| No. | Photo | Name | Matric Number  | Semester  | Program  |
+| ------------- | ------------- | ------------- | ------------- | ------------- | ------------- |
+|1.|<img src="Photo/yuen_photo.jpeg" width=100> | Wong Chun Yuen | 278820 | 1 | Bachelor of Science with Honours (Information Technology) |
+|2.|<img src= "Photo/profilepic.jpeg" width=100> | Ho Pin Xian  | 271760  | 3 | Bachelor of Science with Honours (Business Mathematics)  |
+|3.|<img src= "Photo/Re%20Jie.passport%20photo.JPG" width=100>  | Wong Re Jie | 277741 | 1 | Bachelor of Science with Honours (Information Technology) |
+|4.|<img src= "Photo/Passport%20pic.JPG" width=100>| Lim Zhun Wei | 279632  | 5 | Bachelor of Science with Honours (Information Technology)  |
+|5.|<img src= "https://github.com/STIA1113-A201/groupproject-intelligence/blob/main/Photo/QuinnTeoh%20Resized.jpg?raw=true" width=100>| Teoh Tze En  | 254275  | 7 | Bachelor of Business Administration (BBA) |
 
 ## Title of your application
 ## Introduction
