@@ -6,7 +6,7 @@
 | ------------- |--------------------------------------------|-----------------------|---------------|----------|--------------|
 |1.|                                            |                       |               |          |              |
 |2.|                                            |                       |               |          |              |
-|3.| <img src= "images/fanny.jpg" width=100>    | FANNY TANG TUNG HUONG | 278366        | 5        | 011-51103470 |
+|3.| <img src= "images/fanny.jpg" width=100>    | Fanny Tang Tung Huong | 278366        | 5        | 011-51103470 |
 |4.| <img src= "images/zhun wei.JPG" width=100> | Lim Zhun Wei          | 279632        | 5        | 014-7461218  |
 |5.|                                            |                       |               |          |              |
 
