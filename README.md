@@ -4,11 +4,11 @@
 ## Group Info:
 | No. | Photo | Name | Matric Number  | Semester  | Phone Number  |
 | ------------- | ------------- | ------------- | ------------- | ------------- | ------------- |
-|1.| | Wong Chun Yuen | 278820 | 1 | Bachelor of Science with Honours (Information Technology) |
-|2.| | Ho Pin Xian  | 271760  | 3 | Bachelor of Science with Honours (Business Mathematics)  |
-|3.| | Wong Re Jie | 277741 | 1 | Bachelor of Science with Honours (Information Technology) |
+|1.| |  |  |  |  |
+|2.| |   |   |  |   |
+|3.| |  |  |  |  |
 |4.|<img src= "images/zhun wei.JPG" width=100>| Lim Zhun Wei | 279632  | 5 | 014-7461218  |
-|5.| | Teoh Tze En  | 254275  | 7 | Bachelor of Business Administration (BBA) |
+|5.| |  |   |  |  |
 
 ## Title of your application
 ## Introduction
