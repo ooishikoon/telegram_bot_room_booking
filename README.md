@@ -23,6 +23,7 @@
 
 ## UML Class Diagram
 ## Database Design
+<img src= "images/database_design.jpeg"> 
 ## Youtube Presentation
 ## References (Not less than 20)
 ## JavaDoc
