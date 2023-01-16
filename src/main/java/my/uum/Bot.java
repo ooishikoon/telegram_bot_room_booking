@@ -581,7 +581,7 @@ public class Bot extends TelegramLongPollingBot {
             response.setChatId(update.getMessage().getChatId().toString());
             response.setText(message);
             testmap.put(update.getMessage().getChatId().toString(), "doneappadmin");
-        }
+        }//end approve admin
 
 
         try {
