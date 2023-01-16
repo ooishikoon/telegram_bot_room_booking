@@ -1,4 +1,4 @@
-package my.uum;1
+package my.uum;
 
 import java.sql.*;
 import java.text.SimpleDateFormat;

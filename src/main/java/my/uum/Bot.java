@@ -1,4 +1,4 @@
-package my.uum;1
+package my.uum;
 
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
