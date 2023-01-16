@@ -1,6 +1,8 @@
 package my.uum;
 
 import java.sql.*;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 
 public class SQLite {
@@ -267,6 +269,24 @@ public class SQLite {
 
         } catch (SQLException e) {
             e.printStackTrace();
+        }
+    }
+
+    // This method is used to run sql query for deleting the data that is 7 days older than current date
+    public void deleteData(){
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.DAY_OF_MONTH, -7);
+
+        String sql_checkDate = "DELETE FROM `tbl_booking` WHERE booking_date <= ?";
+        try {
+            Connection con = SQLite.connect();
+            PreparedStatement ps;
+            ps = con.prepareStatement(sql_checkDate);
+            ps.setString(1, formatter.format(cal.getTime()));
+            ps.execute();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 

@@ -5,6 +5,7 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -604,4 +605,6 @@ public class Bot extends TelegramLongPollingBot {
         // TODO
         return "5968085786:AAFbSugQxoLAvYnyvI5PL94VZt4AwwBWP-A";
     }
+
+
 }
