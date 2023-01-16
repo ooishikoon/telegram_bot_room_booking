@@ -62,7 +62,7 @@ public class Bot extends TelegramLongPollingBot {
                 || (command.equals("1") && testmap.get(update.getMessage().getChatId().toString()).equals("menu"))) {
             String message = "Hi there! I'm Koko, Bot Virtual Assistant.\n"
                     + '\n' +
-                    "hhhhWelcome to UUM Room Booking Bot. \n"
+                    "Welcome to UUM Room Booking Bot. \n"
                     + '\n' +
                     "Live chat with me to book a meeting room or any enquires. \n"
                     + '\n' +
