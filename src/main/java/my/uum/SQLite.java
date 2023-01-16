@@ -24,7 +24,6 @@ public class SQLite {
         return con;
     }
 
-
     public void insert(String ic_no, String staff_id, String name, String mobile_telno, String email, String password) {
 
         String sql = "INSERT INTO tbl_users (user_email,staff_id,user_name,user_ic,user_phone,user_password) VALUES (?,?,?,?,?,?);";
@@ -47,71 +46,6 @@ public class SQLite {
     }
 
 
-    public void delete(String staff_id) {
-        String sql = "DELETE FROM tbl_booking WHERE staff_id= " + staff_id;
-        try {
-            Connection con = SQLite.connect();
-            PreparedStatement stmt;
-
-            stmt = con.prepareStatement(sql);
-            stmt.execute();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public String display() {
-        String sql = "SELECT *  FROM tbl_booking INNER JOIN tbl_room ON tbl_booking.room_id = tbl_room.room_id";
-
-        String message = "Below are the list of users." + "\n";
-
-        try (Connection con = SQLite.connect();
-             Statement stmt = con.createStatement();
-             ResultSet rs = stmt.executeQuery(sql)) {
-
-
-            // loop through the result set
-            while (rs.next()) {
-                int staffid = rs.getInt("staff_id");
-                int bookingid = rs.getInt("booking_id");
-                int roomid = rs.getInt("room_id");
-                int maxcapa = rs.getInt("max_capa");
-                message += "\n" +
-                        "Booking ID: " + String.valueOf(bookingid) + "\n"
-                        + '\n' +
-                        "IC NO: " + rs.getString("ic_no") + "\n"
-                        + '\n' +
-                        "Staff ID: " + String.valueOf(staffid) + "\n"
-                        + '\n' +
-                        "Name: " + rs.getString("name") + "\n"
-                        + '\n' +
-                        "Mobile NO: " + rs.getString("mobile_telno") + "\n"
-                        + '\n' +
-                        "Email: " + rs.getString("email") + "\n"
-                        + '\n' +
-                        "Purpose of booking: " + rs.getString("purpose") + "\n"
-                        + '\n' +
-                        "Booking Date: " + rs.getString("booking_date") + "\n"
-                        + '\n' +
-                        "Booking Time: " + rs.getString("booking_time") + "\n"
-                        + '\n' +
-                        "Room ID: " + String.valueOf(roomid) + "\n"
-                        + '\n' +
-                        "Room Description: " + rs.getString("room_desc") + "\n"
-                        + '\n' +
-                        "Room Maximum Capacity: " + String.valueOf(maxcapa) + "\n"
-                        + '\n';
-
-
-            }
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-
-        return message;
-    }
-
     public String checkuser(String email, String password) {
         String message = "false";
         String sql = "SELECT * FROM tbl_users WHERE user_email= '" + email + "' AND user_password= '" + password + "'";
@@ -129,6 +63,51 @@ public class SQLite {
         }
         return message;
 
+    }
+    public String checkemail(String email) {
+        String message = "true";
+        String sql = "SELECT * FROM tbl_users WHERE user_email= '" + email + "'";
+
+        try (Connection con = SQLite.connect();
+             Statement stmt = con.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+
+            while (rs.next()) {
+                message = "false";
+            }
+            System.out.println(message);
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return message;
+
+    }
+    public void deletebooking(String room_id) {
+        String sql = "DELETE FROM tbl_booking WHERE available_room_id= '" + room_id+"'";
+        try {
+            Connection con = SQLite.connect();
+            PreparedStatement stmt;
+
+            stmt = con.prepareStatement(sql);
+            stmt.execute();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void updateroomstatus(String room_id) {
+        String sql = "Update tbl_availability SET available_status=null WHERE tbl_availability.available_room_id= '" + room_id+"'";
+        try {
+            Connection con = SQLite.connect();
+            PreparedStatement stmt;
+
+            stmt = con.prepareStatement(sql);
+            stmt.execute();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public void applyadmin(String user_email, String school_id, String admin_status) {
@@ -148,9 +127,207 @@ public class SQLite {
         }
     }
 
+    public String readuserinfo(String user_email,String user_password) {
+        String sql = "SELECT * FROM tbl_users WHERE user_email= '"+user_email+"' AND user_password= '"+user_password+"'";
+
+        String message = "Below are your latest info with us!"+ "\n";
+
+        try (Connection con = SQLite.connect();
+             Statement stmt = con.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+
+            while (rs.next()) {
+                message +=  "\n" +
+                        "1. Email: " + rs.getString("user_email")+ "\n"
+                        + '\n' +
+                        "2. Staff_ID: " + rs.getString("staff_id") + "\n"
+                        + '\n' +
+                        "3. Name: " + rs.getString("user_name") + "\n"
+                        + '\n' +
+                        "4. IC No: " +rs.getString("user_ic") + "\n"
+                        + '\n' +
+                        "5. Phone NO: " + rs.getString("user_phone") + "\n"
+                        + '\n' +
+                        "6. Password: " + rs.getString("user_password") + "\n"
+                        + '\n' +
+                        "Please enter the numbering of information you want to edit. \n"
+                        + '\n' +
+                        "Enter 0: Back to menu \n"
+                        + '\n' ;
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+        return message;
+    }
+
+    public String readuserbooking(String user_email) {
+        String sql = "SELECT * FROM tbl_booking INNER JOIN tbl_availability ON tbl_booking.available_room_id=tbl_availability.available_room_id WHERE tbl_booking.user_email= '"+user_email+ "'";
+
+        String message = "";
+
+        try (Connection con = SQLite.connect();
+             Statement stmt = con.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+
+            while (rs.next()) {
+                message +=  "\n" +
+                        "1. Room ID: " + rs.getString("available_room_id") + "\n"
+                        + '\n' +
+                        "2. Email: " + rs.getString("user_email") + "\n"
+                        + '\n' +
+                        "3. Booking ID: " + rs.getString("booking_id")+ "\n"
+                        + '\n' +
+                        "4. Booking Purpose: " +rs.getString("booking_purpose") + "\n"
+                        + '\n' +
+                        "5. Booking Date: " + rs.getString("booking_date") + "\n"
+                        + '\n' +
+                        "6. Booking Time: " + rs.getString("available_time") + "\n"
+                        + '\n' ;
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+        return message;
+    }
+    public String readuserchosendeletebooking(String room_id) {
+        String sql = "SELECT * FROM tbl_booking INNER JOIN tbl_availability ON tbl_booking.available_room_id=tbl_availability.available_room_id WHERE tbl_booking.available_room_id= '"+room_id+ "'";
+
+        String message = "";
+
+        try (Connection con = SQLite.connect();
+             Statement stmt = con.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+
+            while (rs.next()) {
+                message =  "Do you want to delete this booking? \n" +
+                        "\n" +
+                        "1. Booking ID: " + rs.getString("booking_id")+ "\n"
+                        + '\n' +
+                        "2. Email: " + rs.getString("user_email") + "\n"
+                        + '\n' +
+                        "3. Room ID: " + rs.getString("available_room_id") + "\n"
+                        + '\n' +
+                        "4. Booking Purpose: " +rs.getString("booking_purpose") + "\n"
+                        + '\n' +
+                        "5. Booking Date: " + rs.getString("booking_date") + "\n"
+                        + '\n' +
+                        "6. Booking Time: " + rs.getString("available_time") + "\n"
+                        + '\n' +
+                        "Enter 1: Confirm \n"
+                        + '\n' +
+                        "Enter 0: Back to menu \n"
+                        + '\n' ;;
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+        return message;
+    }
+
+    public void updateuseremail(String user_emailnew, String user_emailold) {
+        String sql = "Update tbl_users SET user_email= '"+user_emailnew+"' Where user_email= '"+user_emailold+"'";
+        try {
+            Connection con = SQLite.connect();
+            PreparedStatement stmt;
+
+            stmt = con.prepareStatement(sql);
+            stmt.execute();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void updateadminemail(String user_emailnew, String user_emailold) {
+        String sql = "Update tbl_admin SET user_email= '"+user_emailnew+"' Where user_email= '"+user_emailold+"'";
+        try {
+            Connection con = SQLite.connect();
+            PreparedStatement stmt;
+
+            stmt = con.prepareStatement(sql);
+            stmt.execute();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void updateuserstaffid(String staff_id, String user_email) {
+        String sql = "Update tbl_users SET staff_id= '"+staff_id+"' Where user_email= '"+user_email+"'";
+        try {
+            Connection con = SQLite.connect();
+            PreparedStatement stmt;
+
+            stmt = con.prepareStatement(sql);
+            stmt.execute();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void updateusername(String name, String user_email) {
+        String sql = "Update tbl_users SET user_name= '"+name+"' Where user_email= '"+user_email+"'";
+        try {
+            Connection con = SQLite.connect();
+            PreparedStatement stmt;
+
+            stmt = con.prepareStatement(sql);
+            stmt.execute();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void updateuseric(String ic, String user_email) {
+        String sql = "Update tbl_users SET user_ic= '"+ic+"' Where user_email= '"+user_email+"'";
+        try {
+            Connection con = SQLite.connect();
+            PreparedStatement stmt;
+
+            stmt = con.prepareStatement(sql);
+            stmt.execute();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    public void updateuserphone(String phone, String user_email) {
+        String sql = "Update tbl_users SET user_phone= '"+phone+"' Where user_email= '"+user_email+"'";
+        try {
+            Connection con = SQLite.connect();
+            PreparedStatement stmt;
+
+            stmt = con.prepareStatement(sql);
+            stmt.execute();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void updateuserpassword(String password, String user_email) {
+        String sql = "Update tbl_users SET user_password= '"+password+"' Where user_email= '"+user_email+"'";
+        try {
+            Connection con = SQLite.connect();
+            PreparedStatement stmt;
+
+            stmt = con.prepareStatement(sql);
+            stmt.execute();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     public String checkadmin(String email, String password) {
         String message = "false";
-        String sql = "SELECT * FROM tbl_users INNER JOIN tbl_admin ON tbl_users.user_email=tbl_admin.user_email WHERE tbl_admin.user_email= '" + email + "' AND tbl_users.user_password= '" + password + "' AND tbl_admin.user_status='Approved'";
+        String sql = "SELECT * FROM tbl_users INNER JOIN tbl_admin ON tbl_users.user_email=tbl_admin.user_email WHERE tbl_admin.user_email= '" + email + "' AND tbl_users.user_password= '" + password + "' AND tbl_admin.admin_status='Approved'";
 
         try (Connection con = SQLite.connect();
              Statement stmt = con.createStatement();
@@ -223,8 +400,8 @@ public class SQLite {
     }
 
     public String dispApplication() {
-        String sql = "SELECT * FROM tbl_users INNER JOIN tbl_admin ON tbl_users.user_email=tbl_admin.user_email WHERE tbl_admin.user_status='Pending approval'";
-        String msg1 = "";
+        String sql = "SELECT * FROM tbl_users INNER JOIN tbl_admin ON tbl_users.user_email=tbl_admin.user_email WHERE tbl_admin.admin_status='Pending approval'";
+        String msg = "";
 
         try {
             Connection con = SQLite.connect();
@@ -234,31 +411,27 @@ public class SQLite {
             ResultSet rs = stmt.executeQuery(sql);
 
             while (rs.next()) {
-                String msg = "Email: " + rs.getString("user_email") +
+                msg += "\nEmail: " + rs.getString("user_email") +
                         "\nStaff ID: " + rs.getString("staff_id") +
                         "\nName: " + rs.getString("user_name") +
                         "\nIC No.: " + rs.getString("user_ic") +
                         "\nPhone No.: " + rs.getString("user_phone") +
                         "\nSchool ID: " + rs.getInt("school_id") +
                         "\nAdmin ID: " + rs.getInt("admin_id") +
-                        "\nStatus: " + rs.getString("user_status") +
+                        "\nStatus: " + rs.getString("admin_status") +
                         "\n\n";
-
-
-                StringBuffer bfr = new StringBuffer(msg);
-                bfr.append(msg);
-                msg1 = msg + msg1;
             }
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return msg1;
+        return msg;
     }
+
 
     public void approveAdmin(String admin_id) {
 
-        String sql = "UPDATE tbl_admin SET user_status = 'Approved' WHERE admin_id = '" + admin_id + "';";
+        String sql = "UPDATE tbl_admin SET admin_status = 'Approved' WHERE admin_id = '" + admin_id + "';";
         try {
             Connection con = SQLite.connect();
             PreparedStatement ps;
@@ -360,9 +533,10 @@ public class SQLite {
         return bookingconfirmationrecord;
     }
 
-    public void addBooking(String user_email, int available_room_id, String booking_purpose) {
-        String sql = "INSERT INTO tbl_booking (user_email, available_room_id, booking_purpose) " +
-                "VALUES (?,?,?);";
+    // register a new room booking
+    public void addBooking(String user_email, int available_room_id, String booking_purpose, String booking_date) {
+        String sql = "INSERT INTO tbl_booking (user_email, available_room_id, booking_purpose, booking_date) " +
+                "VALUES (?,?,?,?);";
         try {
             Connection con = SQLite.connect();
             PreparedStatement stmt;
@@ -371,10 +545,71 @@ public class SQLite {
             stmt.setString(1, user_email);
             stmt.setInt(2, available_room_id);
             stmt.setString(3, booking_purpose);
+            stmt.setString(4, booking_date);
             stmt.execute();
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    // set available status in tbl_availability to 'booked'
+    public void bookingStatusB(int avail_room_id) {
+
+        String sql = "UPDATE tbl_availability SET available_status = 'booked' WHERE tbl_availability.available_room_id = '" + avail_room_id + "'";
+        try {
+            Connection con = SQLite.connect();
+            PreparedStatement ps;
+
+            ps = con.prepareStatement(sql);
+            ps.execute();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // set available status in tbl_availability to 'null'
+    public void bookingStatusN(int avail_room_id) {
+
+        String sql = "UPDATE tbl_availability SET available_status = null WHERE tbl_availability.available_room_id = '" + avail_room_id + "'";
+        try {
+            Connection con = SQLite.connect();
+            PreparedStatement ps;
+
+            ps = con.prepareStatement(sql);
+            ps.execute();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // display all the booking record based on the email
+    public String displayAllBookingRecord(String userEmail){
+        String booking = "";
+
+        String sqlDisplay = "SELECT * FROM ((tbl_availability INNER JOIN tbl_room ON tbl_availability.room_id = tbl_room.room_id)INNER JOIN tbl_booking on tbl_availability.available_room_id=tbl_booking.available_room_id) WHERE tbl_booking.user_email='"+userEmail+"'";
+
+        try (
+                Connection con = SQLite.connect();
+                Statement stmt = con.createStatement();
+                ResultSet rs = stmt.executeQuery(sqlDisplay)){
+
+            // loop through the result set
+            while (rs.next()) {
+                booking +=
+                        "\nRoom ID: " + rs.getString("available_room_id") +
+                                "\nRoom Type: " + rs.getString("room_type") +
+                                "\nRoom Description: " + rs.getString("room_description") +
+                                "\nRoom Capacity: " + rs.getString("room_max_capacity") +
+                                "\nBooking Date: " + rs.getString("available_date") +
+                                "\nBooking Time: " + rs.getString("available_time") +
+                                "\n";
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return booking;
     }
 }
