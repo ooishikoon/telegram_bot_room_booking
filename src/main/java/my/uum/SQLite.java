@@ -221,7 +221,6 @@ public class SQLite {
         }
     }
 
-    //display Application List
     public String dispApplication() {
         String sql = "SELECT * FROM tbl_users INNER JOIN tbl_admin ON tbl_users.user_email=tbl_admin.user_email WHERE tbl_admin.user_status='Pending approval'";
         String msg1 = "";
