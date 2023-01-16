@@ -358,7 +358,7 @@ public class SQLite {
             e.printStackTrace();
         }
         return bookingconfirmationrecord;
-    }1
+    }
 
     public void addBooking(String user_email, int available_room_id, String booking_purpose) {
         String sql = "INSERT INTO tbl_booking (user_email, available_room_id, booking_purpose) " +
