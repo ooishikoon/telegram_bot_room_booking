@@ -19,6 +19,9 @@ public class Bot extends TelegramLongPollingBot {
     Map<String, ArrayList<String>> map5 = new HashMap<String, ArrayList<String>>();
     Map<String, ArrayList<String>> map7 = new HashMap<String, ArrayList<String>>();
     Map<String, ArrayList<String>> map8 = new HashMap<String, ArrayList<String>>(); //map for user update information
+    Map<String, ArrayList<String>> map9 = new HashMap<String, ArrayList<String>>(); // map for booking process
+    Map<String, ArrayList<String>> map10 = new HashMap<String, ArrayList<String>>(); //map for user delete booking
+    Map<String, ArrayList<String>> map11 = new HashMap<String, ArrayList<String>>(); // map for update booking
     Map<String, String> testmap = new HashMap<String, String>();
     String admin_status = "Pending approval";
 
@@ -53,6 +56,15 @@ public class Bot extends TelegramLongPollingBot {
         }
         if (!map8.containsKey(update.getMessage().getChatId().toString())) {
             map8.put(update.getMessage().getChatId().toString(), new ArrayList<String>());
+        }
+        if (!map9.containsKey(update.getMessage().getChatId().toString())) {
+            map9.put(update.getMessage().getChatId().toString(), new ArrayList<String>());
+        }
+        if (!map10.containsKey(update.getMessage().getChatId().toString())) {
+            map10.put(update.getMessage().getChatId().toString(), new ArrayList<String>());
+        }
+        if (!map11.containsKey(update.getMessage().getChatId().toString())) {
+            map11.put(update.getMessage().getChatId().toString(), new ArrayList<String>());
         }
 
         //main menu after enter bot
@@ -165,26 +177,43 @@ public class Bot extends TelegramLongPollingBot {
             } else {
                 map.get(update.getMessage().getChatId().toString()).set(5, update.getMessage().getText());
             }
-            sql.insert(map.get(update.getMessage().getChatId().toString()).get(0), map.get(update.getMessage().getChatId().toString()).get(1), map.get(update.getMessage().getChatId().toString()).get(2), map.get(update.getMessage().getChatId().toString()).get(3), map.get(update.getMessage().getChatId().toString()).get(4), map.get(update.getMessage().getChatId().toString()).get(5));
-            String message = "Registration Successful. Below are your details. \n"
-                    + '\n' +
-                    "IC No: " + map.get(update.getMessage().getChatId().toString()).get(0) + '\n'
-                    + '\n' +
-                    "Staff ID: " + map.get(update.getMessage().getChatId().toString()).get(1) + '\n'
-                    + '\n' +
-                    "Name: " + map.get(update.getMessage().getChatId().toString()).get(2) + '\n'
-                    + '\n' +
-                    "Phone: " + map.get(update.getMessage().getChatId().toString()).get(3) + '\n'
-                    + '\n' +
-                    "Email: " + map.get(update.getMessage().getChatId().toString()).get(4) + '\n'
-                    + '\n' +
-                    "You may log in to proceed with booking. \n"
-                    + '\n' +
-                    "Reply 1: Back to menu.\n"
-                    + '\n';
-            response.setChatId(update.getMessage().getChatId().toString());
-            response.setText(message);
-            testmap.put(update.getMessage().getChatId().toString(), "mainmenu");
+            sql.checkemail(map.get(update.getMessage().getChatId().toString()).get(4));
+            String bool = sql.checkemail(map.get(update.getMessage().getChatId().toString()).get(4));
+            if (bool.equals("true")) {
+                sql.insert(map.get(update.getMessage().getChatId().toString()).get(0), map.get(update.getMessage().getChatId().toString()).get(1), map.get(update.getMessage().getChatId().toString()).get(2), map.get(update.getMessage().getChatId().toString()).get(3), map.get(update.getMessage().getChatId().toString()).get(4), map.get(update.getMessage().getChatId().toString()).get(5));
+                String message = "Registration Successful. Below are your details. \n"
+                        + '\n' +
+                        "IC No: " + map.get(update.getMessage().getChatId().toString()).get(0) + '\n'
+                        + '\n' +
+                        "Staff ID: " + map.get(update.getMessage().getChatId().toString()).get(1) + '\n'
+                        + '\n' +
+                        "Name: " + map.get(update.getMessage().getChatId().toString()).get(2) + '\n'
+                        + '\n' +
+                        "Phone: " + map.get(update.getMessage().getChatId().toString()).get(3) + '\n'
+                        + '\n' +
+                        "Email: " + map.get(update.getMessage().getChatId().toString()).get(4) + '\n'
+                        + '\n' +
+                        "You may log in to proceed with booking. \n"
+                        + '\n' +
+                        "Reply 1: Back to menu.\n"
+                        + '\n';
+                response.setChatId(update.getMessage().getChatId().toString());
+                response.setText(message);
+                testmap.put(update.getMessage().getChatId().toString(), "mainmenu");
+            } else if (bool.equals("false")) {
+                String message = "Registration Fail. \n"
+                        + '\n' +
+                        "This email has been registered.\n"+
+                        '\n' +
+                        "You may log in to proceed.\n"
+                        + '\n' +
+                        "Reply 1: Back to menu.\n"
+                        + '\n';
+                response.setChatId(update.getMessage().getChatId().toString());
+                response.setText(message);
+                testmap.put(update.getMessage().getChatId().toString(), "mainmenu");
+            }
+
         }
         //end register user
 
@@ -245,6 +274,11 @@ public class Bot extends TelegramLongPollingBot {
                 ||(command.equals("0")  && testmap.get(update.getMessage().getChatId().toString()).equals("userupdateicno"))
                 ||(command.equals("0")  && testmap.get(update.getMessage().getChatId().toString()).equals("userupdatephone"))
                 ||(command.equals("0")  && testmap.get(update.getMessage().getChatId().toString()).equals("userupdatepw"))
+                ||(command.equals("0")  && testmap.get(update.getMessage().getChatId().toString()).equals("choosedeletebooking"))
+                ||(command.equals("0")  && testmap.get(update.getMessage().getChatId().toString()).equals("donechoosedeletebooking"))
+                ||(command.equals("0")  && testmap.get(update.getMessage().getChatId().toString()).equals("deletebookingpassword"))
+                ||(command.equals("0")  && testmap.get(update.getMessage().getChatId().toString()).equals("deletepwwrong"))
+                ||(command.equals("0")  && testmap.get(update.getMessage().getChatId().toString()).equals("deletesuccess"))
 
         ) {
             String message =
@@ -404,6 +438,280 @@ public class Bot extends TelegramLongPollingBot {
         }
         //end user update password
         //end user update info
+
+        // start book new room process
+        else if ((command.equals("2") && testmap.get(update.getMessage().getChatId().toString()).equals("loginusermenu"))
+                || (command.equals("2") && testmap.get(update.getMessage().getChatId().toString()).equals("bookingConfirmation"))
+        ){
+
+            String message = "Please enter the date you want to book." +
+                    "\n\n(Example: yyyy-mm-dd)\n" +
+                    "\nReply 0: If you do not wish to proceed with the booking.";
+            response.setChatId(update.getMessage().getChatId().toString());
+            response.setText(message);
+            testmap.put(update.getMessage().getChatId().toString(),"bookdate");
+        }
+
+        else if (update.getMessage().hasText() && testmap.get(update.getMessage().getChatId().toString()).equals("bookdate")) {
+            if(map9.get(update.getMessage().getChatId().toString()).size()==0){
+                map9.get(update.getMessage().getChatId().toString()).add(update.getMessage().getText());
+            }else{
+                map9.get(update.getMessage().getChatId().toString()).set(0,update.getMessage().getText());
+            }
+            sql.checkdate(map9.get(update.getMessage().getChatId().toString()).get(0));
+
+
+            String bool = sql.checkdate(map9.get(update.getMessage().getChatId().toString()).get(0));
+            if (bool.equals("true")) {
+                String message = "Available Rooms on : " + map9.get(update.getMessage().getChatId().toString()).get(0) + "\n\n" +
+                        "ID\t" + "Room Type\t" + "Time";
+                String message1 = "\n\nPlease select the slot that you want to book." + "\n\n" +
+                        "Reply 1: Back to menu.\n";
+                response.setText(message + sql.displayAvailableRoom(map9.get(update.getMessage().getChatId().toString()).get(0) ) + message1);
+                response.setChatId(update.getMessage().getChatId().toString());
+                testmap.put(update.getMessage().getChatId().toString(),"availablelist");
+            } else if (bool.equals("false")) {
+                String message = "The slot on " + map9.get(update.getMessage().getChatId().toString()).get(0) + " is full.\n\n" +
+                        "Please another date." + "\n\n" +
+                        "Reply 1: Back to menu.\n";
+                response.setChatId(update.getMessage().getChatId().toString());
+                response.setText(message);
+                testmap.put(update.getMessage().getChatId().toString(),"datefull");
+            }
+        }
+
+        // ask for booking purpose
+        else if (update.getMessage().hasText() && testmap.get(update.getMessage().getChatId().toString()).equals("availablelist")){
+            if(map9.get(update.getMessage().getChatId().toString()).size()==1){
+                map9.get(update.getMessage().getChatId().toString()).add(update.getMessage().getText());
+            }else{
+                map9.get(update.getMessage().getChatId().toString()).set(1,update.getMessage().getText());
+            }
+            String message = "Thanks. You are almost done the booking process." +
+                    "\n\nMay we have your booking purpose.\n\n" +
+                    "Reply 0: If you do not wish to proceed with the booking.";
+            response.setChatId(update.getMessage().getChatId().toString());
+            response.setText(message);
+            testmap.put(update.getMessage().getChatId().toString(),"bookingpurpose");
+        }
+
+        // booking confirmation message
+        else if (update.getMessage().hasText() && testmap.get(update.getMessage().getChatId().toString()).equals("bookingpurpose")){
+            if(map9.get(update.getMessage().getChatId().toString()).size()==2){
+                map9.get(update.getMessage().getChatId().toString()).add(update.getMessage().getText());
+            }else{
+                map9.get(update.getMessage().getChatId().toString()).set(2,update.getMessage().getText());
+            }
+            String message = "This is your booking details: \n" +
+                    "\nEmail: " + map1.get(update.getMessage().getChatId().toString()).get(0);
+            String message1 =
+                    "\nBooking purpose: " + map9.get(update.getMessage().getChatId().toString()).get(2) +
+                            "\n\n" + "Are these booking details correct?" +
+                            "\n" + "Reply 1: Yes" +
+                            "\n" + "Reply 2: No, I would like to change the booking. " +
+                            "\n(Remind: You would have to reselect the date to proceed.)" +
+                            "\n\n" + "Reply 0: Back to menu.";
+            response.setChatId(update.getMessage().getChatId().toString());
+            response.setText(message + sql.displayBookingConfirmation(map9.get(update.getMessage().getChatId().toString()).get(1)) + message1);
+            testmap.put(update.getMessage().getChatId().toString(),"bookingConfirmation");
+        }
+
+        // confirm booking = yes
+        else if (command.equals("1") && testmap.get(update.getMessage().getChatId().toString()).equals("bookingConfirmation")){
+            String message = "Your booking had successfully booked!" +
+                    "\n\nReply 0: Back to menu.";
+            sql.addBooking(
+                    map1.get(update.getMessage().getChatId().toString()).get(0), // email
+                    Integer.parseInt(map9.get(update.getMessage().getChatId().toString()).get(1)), // available room id
+                    map9.get(update.getMessage().getChatId().toString()).get(2), // booking purpose
+                    map9.get(update.getMessage().getChatId().toString()).get(0)); // booking date
+            sql.bookingStatusB(Integer.parseInt(map9.get(update.getMessage().getChatId().toString()).get(1)));
+            response.setChatId(update.getMessage().getChatId().toString());
+            response.setText(message);
+            testmap.put(update.getMessage().getChatId().toString(),"bookingsuccess");
+        }
+        // end booking process
+
+        // start 3. update booking
+        else if (command.equals("3") && testmap.get(update.getMessage().getChatId().toString()).equals("loginusermenu")) {
+            String message =
+                    "These are your booking record with us!\n"
+                            + '\n' +
+                            "Your Email: " + map1.get(update.getMessage().getChatId().toString()).get(0) + "\n"
+                    ;
+            String message1 =
+                    "\n\nPlease enter the Room ID you want to update";
+            response.setChatId(update.getMessage().getChatId().toString());
+            response.setText(message + sql.displayAllBookingRecord(map1.get(update.getMessage().getChatId().toString()).get(0)) + message1);
+            testmap.put(update.getMessage().getChatId().toString(), "updatebooking");
+        }
+
+        else if (update.getMessage().hasText() && testmap.get(update.getMessage().getChatId().toString()).equals("updatebooking")
+        ){
+            if(map11.get(update.getMessage().getChatId().toString()).size()==0){
+                map11.get(update.getMessage().getChatId().toString()).add(update.getMessage().getText());
+            }else{
+                map11.get(update.getMessage().getChatId().toString()).set(0,update.getMessage().getText());
+            }
+            String message = "Please enter the date you want to book." +
+                    "\n\n(Example: yyyy-mm-dd)\n" +
+                    "\nReply 0: If you do not wish to proceed with the booking.";
+            response.setChatId(update.getMessage().getChatId().toString());
+            response.setText(message);
+            testmap.put(update.getMessage().getChatId().toString(),"updatedate");
+        }
+
+        else if (update.getMessage().hasText() && testmap.get(update.getMessage().getChatId().toString()).equals("updatedate")) {
+            if(map11.get(update.getMessage().getChatId().toString()).size()==1){
+                map11.get(update.getMessage().getChatId().toString()).add(update.getMessage().getText());
+            }else{
+                map11.get(update.getMessage().getChatId().toString()).set(1,update.getMessage().getText());
+            }
+            sql.checkdate(map11.get(update.getMessage().getChatId().toString()).get(1));
+
+
+            String bool = sql.checkdate(map11.get(update.getMessage().getChatId().toString()).get(1));
+            if (bool.equals("true")) {
+                String message = "Available Rooms on : " + map11.get(update.getMessage().getChatId().toString()).get(1) + "\n\n" +
+                        "ID\t" + "Room Type\t" + "Time";
+                String message1 = "\n\nPlease select the slot that you want to book." + "\n\n" +
+                        "Reply 1: Back to menu.\n";
+                response.setText(message + sql.displayAvailableRoom(map11.get(update.getMessage().getChatId().toString()).get(1) ) + message1);
+                response.setChatId(update.getMessage().getChatId().toString());
+                testmap.put(update.getMessage().getChatId().toString(),"availablelist1");
+            } else if (bool.equals("false")) {
+                String message = "The slot on " + map11.get(update.getMessage().getChatId().toString()).get(1) + " is full.\n\n" +
+                        "Please another date." + "\n\n" +
+                        "Reply 1: Back to menu.\n";
+                response.setChatId(update.getMessage().getChatId().toString());
+                response.setText(message);
+                testmap.put(update.getMessage().getChatId().toString(),"datefull");
+            }
+        }
+
+        // ask for booking purpose
+        else if (update.getMessage().hasText() && testmap.get(update.getMessage().getChatId().toString()).equals("availablelist1")){
+            if(map11.get(update.getMessage().getChatId().toString()).size()==2){
+                map11.get(update.getMessage().getChatId().toString()).add(update.getMessage().getText());
+            }else{
+                map11.get(update.getMessage().getChatId().toString()).set(2,update.getMessage().getText());
+            }
+            String message = "Thanks. You are almost done the booking process." +
+                    "\n\nMay we have your booking purpose.\n\n" +
+                    "Reply 0: If you do not wish to proceed with the booking.";
+            response.setChatId(update.getMessage().getChatId().toString());
+            response.setText(message);
+            testmap.put(update.getMessage().getChatId().toString(),"updatepurpose");
+        }
+
+        // booking confirmation message
+        else if (update.getMessage().hasText() && testmap.get(update.getMessage().getChatId().toString()).equals("updatepurpose")){
+            if(map11.get(update.getMessage().getChatId().toString()).size()==3){
+                map11.get(update.getMessage().getChatId().toString()).add(update.getMessage().getText());
+            }else{
+                map11.get(update.getMessage().getChatId().toString()).set(3,update.getMessage().getText());
+            }
+            String message = "This is your booking details: \n" +
+                    "\nEmail: " + map1.get(update.getMessage().getChatId().toString()).get(0);
+            String message1 =
+                    "\nBooking purpose: " + map11.get(update.getMessage().getChatId().toString()).get(3) +
+                            "\n\n" + "Are these booking details correct?" +
+                            "\n" + "Reply 1: Yes" +
+                            "\n" + "Reply 2: No, I would like to change the booking. " +
+                            "\n(Remind: You would have to reselect the date to proceed.)" +
+                            "\n\n" + "Reply 0: Back to menu.";
+            response.setChatId(update.getMessage().getChatId().toString());
+            response.setText(message + sql.displayBookingConfirmation(map11.get(update.getMessage().getChatId().toString()).get(2)) + message1);
+            testmap.put(update.getMessage().getChatId().toString(),"updateConfirmation");
+        }
+
+        // confirm booking = yes
+        else if (command.equals("1") && testmap.get(update.getMessage().getChatId().toString()).equals("updateConfirmation")){
+            String message = "Your booking had successfully booked!" +
+                    "\n\nReply 0: Back to menu.";
+            sql.addBooking(
+                    map1.get(update.getMessage().getChatId().toString()).get(0), // email
+                    Integer.parseInt(map11.get(update.getMessage().getChatId().toString()).get(2)), // available room id
+                    map11.get(update.getMessage().getChatId().toString()).get(3), // booking purpose
+                    map11.get(update.getMessage().getChatId().toString()).get(1)); // booking date
+            sql.bookingStatusB(Integer.parseInt(map11.get(update.getMessage().getChatId().toString()).get(2)));
+            sql.bookingStatusN(Integer.parseInt(map11.get(update.getMessage().getChatId().toString()).get(0)));
+            sql.deletebooking(map11.get(update.getMessage().getChatId().toString()).get(0));
+            response.setChatId(update.getMessage().getChatId().toString());
+            response.setText(message);
+            testmap.put(update.getMessage().getChatId().toString(),"bookingsuccess");
+        }
+        // end update process
+
+        //start user delete booking
+        else if (command.equals("4")  && testmap.get(update.getMessage().getChatId().toString()).equals("loginusermenu")) {
+            System.out.println(map1.get(update.getMessage().getChatId().toString()).get(0));
+            String book= sql.readuserbooking(map1.get(update.getMessage().getChatId().toString()).get(0));
+            if ( book.equals("")) {
+                String message = "There is no application for now." +
+                        "\n\nReply 0: Back to menu.\n\n" ;
+                response.setChatId(update.getMessage().getChatId().toString());
+                response.setText(message);
+                testmap.put(update.getMessage().getChatId().toString(), "choosedeletebooking");
+            } else if (! book.equals("")) {
+                String message = "Below are your bookings with us!"+ "\n";
+                String message1="Please enter the room ID of the booking you want to delete.\n"
+                        + '\n' +
+                        "Enter 0: Back to menu \n"
+                        + '\n' ;
+                response.setChatId(update.getMessage().getChatId().toString());
+                response.setText(message+sql.readuserbooking(map1.get(update.getMessage().getChatId().toString()).get(0))+message1);
+                testmap.put(update.getMessage().getChatId().toString(),"choosedeletebooking");
+            }
+        }
+        else if (update.getMessage().hasText() && testmap.get(update.getMessage().getChatId().toString()).equals("choosedeletebooking")) {
+            if (map10.get(update.getMessage().getChatId().toString()).size() == 0) {
+                map10.get(update.getMessage().getChatId().toString()).add(update.getMessage().getText());
+            } else {
+                map10.get(update.getMessage().getChatId().toString()).set(0, update.getMessage().getText());
+            }
+            response.setChatId(update.getMessage().getChatId().toString());
+            response.setText(sql.readuserchosendeletebooking(map10.get(update.getMessage().getChatId().toString()).get(0)));
+            testmap.put(update.getMessage().getChatId().toString(),"donechoosedeletebooking");
+        }
+        else if (command.equals("1")  &&  testmap.get(update.getMessage().getChatId().toString()).equals("donechoosedeletebooking")) {
+            String message="Please enter your password to confirm your delete action.\n"
+                    + '\n' +
+                    "Enter 0: Back to menu \n"
+                    + '\n' ;
+            response.setChatId(update.getMessage().getChatId().toString());
+            response.setText(message);
+            testmap.put(update.getMessage().getChatId().toString(),"deletebookingpassword");
+        }
+        else if (update.getMessage().hasText() &&  testmap.get(update.getMessage().getChatId().toString()).equals("deletebookingpassword")) {
+            if (map10.get(update.getMessage().getChatId().toString()).size() == 1) {
+                map10.get(update.getMessage().getChatId().toString()).add(update.getMessage().getText());
+            } else {
+                map10.get(update.getMessage().getChatId().toString()).set(1, update.getMessage().getText());
+            }
+            sql.checkuser(map1.get(update.getMessage().getChatId().toString()).get(0), map10.get(update.getMessage().getChatId().toString()).get(1));
+            String bool = sql.checkuser(map1.get(update.getMessage().getChatId().toString()).get(0), map10.get(update.getMessage().getChatId().toString()).get(1));
+            if (bool.equals("true")) {
+                sql.deletebooking(map10.get(update.getMessage().getChatId().toString()).get(0));
+                sql.updateroomstatus(map10.get(update.getMessage().getChatId().toString()).get(0));
+                String message = "Your booking is successfully deleted!\n"
+                        + '\n' +
+                        "Reply 0: Back to Menu.\n"
+                        + '\n';
+                response.setChatId(update.getMessage().getChatId().toString());
+                response.setText(message);
+                testmap.put(update.getMessage().getChatId().toString(), "deletesuccess");
+            } else if (bool.equals("false")) {
+                String message = "Password Incorrect. Please try again.\n" +
+                        '\n' +
+                        "Reply 0 : Back to menu.\n"
+                        + '\n';
+                response.setChatId(update.getMessage().getChatId().toString());
+                response.setText(message);
+                testmap.put(update.getMessage().getChatId().toString(), "deletepwwrong");
+            }
+        }
+        //end user delete booking
 
         //start 5. apply admin
         else if (command.equals("5") && testmap.get(update.getMessage().getChatId().toString()).equals("loginusermenu")) {
@@ -761,27 +1069,16 @@ public class Bot extends TelegramLongPollingBot {
     }
 
 
-//    @Override
-//    public String getBotUsername() {
-//        // TODO
-//        return "STIW3054_koko_bot";
-//    }
-//
-//
-//    @Override
-//    public String getBotToken() {
-//        // TODO
-//        return "5968085786:AAFbSugQxoLAvYnyvI5PL94VZt4AwwBWP-A";
-//    }
-        @Override
-        public String getBotUsername() {
-            // TODO
-            return "ASSIGN2278366BOT";
-        }
+    @Override
+    public String getBotUsername() {
+        // TODO
+        return "STIW3054_koko_bot";
+    }
 
-            @Override
-            public String getBotToken() {
-                // TODO
-                return "5848383587:AAFVwMMOSLu7WpkhVI7MpkVuwtwEOKmDnq0";
-            }
+
+    @Override
+    public String getBotToken() {
+        // TODO
+        return "5968085786:AAFbSugQxoLAvYnyvI5PL94VZt4AwwBWP-A";
+    }
 }
