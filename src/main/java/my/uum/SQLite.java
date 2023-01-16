@@ -1,12 +1,13 @@
 package my.uum;
 
 import java.sql.*;
-
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 public class SQLite {
 
     public static Connection connect() {
-        String jdbc = "jdbc:sqlite:C:/sqlite/database/database.db";
+        String jdbc = "jdbc:sqlite:C:\\Users\\Fanny\\IdeaProjects\\group-project-koko\\database\\database.db";
         Connection con = null;
 
         try {
@@ -147,9 +148,141 @@ public class SQLite {
         }
     }
 
+    public String readuserinfo(String user_email,String user_password) {
+        String sql = "SELECT * FROM tbl_users WHERE user_email= '"+user_email+"' AND user_password= '"+user_password+"'";
+
+        String message = "Below are your latest info with us!"+ "\n";
+
+        try (Connection con = SQLite.connect();
+             Statement stmt = con.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+
+            while (rs.next()) {
+                message +=  "\n" +
+                        "1. Email: " + rs.getString("user_email")+ "\n"
+                        + '\n' +
+                        "2. Staff_ID: " + rs.getString("staff_id") + "\n"
+                        + '\n' +
+                        "3. Name: " + rs.getString("user_name") + "\n"
+                        + '\n' +
+                        "4. IC No: " +rs.getString("user_ic") + "\n"
+                        + '\n' +
+                        "5. Phone NO: " + rs.getString("user_phone") + "\n"
+                        + '\n' +
+                        "6. Password: " + rs.getString("user_password") + "\n"
+                        + '\n' +
+                        "Please enter the numbering of information you want to edit. \n"
+                        + '\n' +
+                        "Enter 0: Back to menu \n"
+                        + '\n' ;
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+        return message;
+    }
+
+    public void updateuseremail(String user_emailnew, String user_emailold) {
+        String sql = "Update tbl_users SET user_email= '"+user_emailnew+"' Where user_email= '"+user_emailold+"'";
+        try {
+            Connection con = SQLite.connect();
+            PreparedStatement stmt;
+
+            stmt = con.prepareStatement(sql);
+            stmt.execute();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void updateadminemail(String user_emailnew, String user_emailold) {
+        String sql = "Update tbl_admin SET user_email= '"+user_emailnew+"' Where user_email= '"+user_emailold+"'";
+        try {
+            Connection con = SQLite.connect();
+            PreparedStatement stmt;
+
+            stmt = con.prepareStatement(sql);
+            stmt.execute();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void updateuserstaffid(String staff_id, String user_email) {
+        String sql = "Update tbl_users SET staff_id= '"+staff_id+"' Where user_email= '"+user_email+"'";
+        try {
+            Connection con = SQLite.connect();
+            PreparedStatement stmt;
+
+            stmt = con.prepareStatement(sql);
+            stmt.execute();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void updateusername(String name, String user_email) {
+        String sql = "Update tbl_users SET user_name= '"+name+"' Where user_email= '"+user_email+"'";
+        try {
+            Connection con = SQLite.connect();
+            PreparedStatement stmt;
+
+            stmt = con.prepareStatement(sql);
+            stmt.execute();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void updateuseric(String ic, String user_email) {
+        String sql = "Update tbl_users SET user_ic= '"+ic+"' Where user_email= '"+user_email+"'";
+        try {
+            Connection con = SQLite.connect();
+            PreparedStatement stmt;
+
+            stmt = con.prepareStatement(sql);
+            stmt.execute();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    public void updateuserphone(String phone, String user_email) {
+        String sql = "Update tbl_users SET user_phone= '"+phone+"' Where user_email= '"+user_email+"'";
+        try {
+            Connection con = SQLite.connect();
+            PreparedStatement stmt;
+
+            stmt = con.prepareStatement(sql);
+            stmt.execute();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void updateuserpassword(String password, String user_email) {
+        String sql = "Update tbl_users SET user_password= '"+password+"' Where user_email= '"+user_email+"'";
+        try {
+            Connection con = SQLite.connect();
+            PreparedStatement stmt;
+
+            stmt = con.prepareStatement(sql);
+            stmt.execute();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     public String checkadmin(String email, String password) {
         String message = "false";
-        String sql = "SELECT * FROM tbl_users INNER JOIN tbl_admin ON tbl_users.user_email=tbl_admin.user_email WHERE tbl_admin.user_email= '" + email + "' AND tbl_users.user_password= '" + password + "' AND tbl_admin.user_status='Approved'";
+        String sql = "SELECT * FROM tbl_users INNER JOIN tbl_admin ON tbl_users.user_email=tbl_admin.user_email WHERE tbl_admin.user_email= '" + email + "' AND tbl_users.user_password= '" + password + "' AND tbl_admin.admin_status='Approved'";
 
         try (Connection con = SQLite.connect();
              Statement stmt = con.createStatement();
@@ -222,8 +355,8 @@ public class SQLite {
     }
 
     public String dispApplication() {
-        String sql = "SELECT * FROM tbl_users INNER JOIN tbl_admin ON tbl_users.user_email=tbl_admin.user_email WHERE tbl_admin.user_status='Pending approval'";
-        String msg1 = "";
+        String sql = "SELECT * FROM tbl_users INNER JOIN tbl_admin ON tbl_users.user_email=tbl_admin.user_email WHERE tbl_admin.admin_status='Pending approval'";
+        String msg = "";
 
         try {
             Connection con = SQLite.connect();
@@ -233,31 +366,27 @@ public class SQLite {
             ResultSet rs = stmt.executeQuery(sql);
 
             while (rs.next()) {
-                String msg = "Email: " + rs.getString("user_email") +
+                 msg += "\nEmail: " + rs.getString("user_email") +
                         "\nStaff ID: " + rs.getString("staff_id") +
                         "\nName: " + rs.getString("user_name") +
                         "\nIC No.: " + rs.getString("user_ic") +
                         "\nPhone No.: " + rs.getString("user_phone") +
                         "\nSchool ID: " + rs.getInt("school_id") +
                         "\nAdmin ID: " + rs.getInt("admin_id") +
-                        "\nStatus: " + rs.getString("user_status") +
+                        "\nStatus: " + rs.getString("admin_status") +
                         "\n\n";
-
-
-                StringBuffer bfr = new StringBuffer(msg);
-                bfr.append(msg);
-                msg1 = msg + msg1;
             }
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return msg1;
+        return msg;
     }
+
 
     public void approveAdmin(String admin_id) {
 
-        String sql = "UPDATE tbl_admin SET user_status = 'Approved' WHERE admin_id = '" + admin_id + "';";
+        String sql = "UPDATE tbl_admin SET admin_status = 'Approved' WHERE admin_id = '" + admin_id + "';";
         try {
             Connection con = SQLite.connect();
             PreparedStatement ps;
@@ -269,5 +398,24 @@ public class SQLite {
             e.printStackTrace();
         }
     }
+
+    // This method is used to run sql query for deleting the data that is 7 days older than current date
+    public void deleteData(){
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.DAY_OF_MONTH, -7);
+
+        String sql_checkDate = "DELETE FROM `tbl_booking` WHERE booking_date <= ?";
+        try {
+            Connection con = SQLite.connect();
+            PreparedStatement ps;
+            ps = con.prepareStatement(sql_checkDate);
+            ps.setString(1, formatter.format(cal.getTime()));
+            ps.execute();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 
 }

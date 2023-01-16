@@ -4,20 +4,21 @@ import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
-
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 public class Bot extends TelegramLongPollingBot {
     SQLite sql = new SQLite();
-    Map<String, ArrayList<String>> map = new HashMap<String, ArrayList<String>>();
-    Map<String, ArrayList<String>> map1 = new HashMap<String, ArrayList<String>>();
-    Map<String, ArrayList<String>> map2 = new HashMap<String, ArrayList<String>>();
+    Map<String, ArrayList<String>> map = new HashMap<String, ArrayList<String>>();  //map for user to register new account
+    Map<String, ArrayList<String>> map1 = new HashMap<String, ArrayList<String>>(); //map for user to log in if already has account
+    Map<String, ArrayList<String>> map2 = new HashMap<String, ArrayList<String>>(); //map for user apply admin
     Map<String, ArrayList<String>> map3 = new HashMap<String, ArrayList<String>>();
     Map<String, ArrayList<String>> map4 = new HashMap<String, ArrayList<String>>();
     Map<String, ArrayList<String>> map5 = new HashMap<String, ArrayList<String>>();
     Map<String, ArrayList<String>> map7 = new HashMap<String, ArrayList<String>>();
+    Map<String, ArrayList<String>> map8 = new HashMap<String, ArrayList<String>>(); //map for user update information
     Map<String, String> testmap = new HashMap<String, String>();
     String admin_status = "Pending approval";
 
@@ -49,6 +50,9 @@ public class Bot extends TelegramLongPollingBot {
         }
         if (!map7.containsKey(update.getMessage().getChatId().toString())) {
             map7.put(update.getMessage().getChatId().toString(), new ArrayList<String>());
+        }
+        if (!map8.containsKey(update.getMessage().getChatId().toString())) {
+            map8.put(update.getMessage().getChatId().toString(), new ArrayList<String>());
         }
 
         //main menu after enter bot
@@ -229,11 +233,20 @@ public class Bot extends TelegramLongPollingBot {
         //end user login
 
         //start user logged in main menu
-        else if ((command.equals("1") && testmap.get(update.getMessage().getChatId().toString()).equals("loggedin"))
-                || (command.equals("1") && testmap.get(update.getMessage().getChatId().toString()).equals("doneapplyadmin"))
-                || (command.equals("1") && testmap.get(update.getMessage().getChatId().toString()).equals("submitapplyadmin"))
-                || (command.equals("0") && testmap.get(update.getMessage().getChatId().toString()).equals("applyadminemail"))
-                || (command.equals("0") && testmap.get(update.getMessage().getChatId().toString()).equals("chooseschool"))) {
+        else if ((command.equals("1")  && testmap.get(update.getMessage().getChatId().toString()).equals("loggedin"))
+                ||(command.equals("1")  && testmap.get(update.getMessage().getChatId().toString()).equals("doneapplyadmin"))
+                ||(command.equals("1")  && testmap.get(update.getMessage().getChatId().toString()).equals("submitapplyadmin"))
+                ||(command.equals("0")  && testmap.get(update.getMessage().getChatId().toString()).equals("applyadminemail"))
+                ||(command.equals("0")  && testmap.get(update.getMessage().getChatId().toString()).equals("chooseschool"))
+                ||(command.equals("0")  && testmap.get(update.getMessage().getChatId().toString()).equals("chooseupdateinfo"))
+                ||(command.equals("0")  && testmap.get(update.getMessage().getChatId().toString()).equals("userupdateemail"))
+                ||(command.equals("0")  && testmap.get(update.getMessage().getChatId().toString()).equals("userupdatestaffid"))
+                ||(command.equals("0")  && testmap.get(update.getMessage().getChatId().toString()).equals("userupdatename"))
+                ||(command.equals("0")  && testmap.get(update.getMessage().getChatId().toString()).equals("userupdateicno"))
+                ||(command.equals("0")  && testmap.get(update.getMessage().getChatId().toString()).equals("userupdatephone"))
+                ||(command.equals("0")  && testmap.get(update.getMessage().getChatId().toString()).equals("userupdatepw"))
+
+        ) {
             String message =
                     "Please choose an option to begin.\n"
                             + '\n' +
@@ -246,12 +259,151 @@ public class Bot extends TelegramLongPollingBot {
                             "4: Delete Booking \n"
                             + '\n' +
                             "5: Apply School Admin \n"
-                            + '\n';
+                            + '\n'
+                    ;
             response.setChatId(update.getMessage().getChatId().toString());
             response.setText(message);
             testmap.put(update.getMessage().getChatId().toString(), "loginusermenu");
         }
         //end user logged in main menu
+
+        //start user update info
+        else if (command.equals("1")  && testmap.get(update.getMessage().getChatId().toString()).equals("loginusermenu")) {
+            sql.readuserinfo(map1.get(update.getMessage().getChatId().toString()).get(0), map1.get(update.getMessage().getChatId().toString()).get(1));
+            response.setChatId(update.getMessage().getChatId().toString());
+            response.setText(sql.readuserinfo(map1.get(update.getMessage().getChatId().toString()).get(0), map1.get(update.getMessage().getChatId().toString()).get(1)));
+            testmap.put(update.getMessage().getChatId().toString(),"chooseupdateinfo");
+        }
+
+        //start user update email
+        else if (command.equals("1")  && testmap.get(update.getMessage().getChatId().toString()).equals("chooseupdateinfo")) {
+            String message = "Please enter your new email.\n\n(Example: max@gmail.com)\n\nReply 0: If you do not wish to proceed with the update.";
+            response.setChatId(update.getMessage().getChatId().toString());
+            response.setText(message);
+            testmap.put(update.getMessage().getChatId().toString(),"userupdateemail");
+        }
+        else if (update.getMessage().hasText() && testmap.get(update.getMessage().getChatId().toString()).equals("userupdateemail")) {
+            if(map8.get(update.getMessage().getChatId().toString()).size()==0){
+                map8.get(update.getMessage().getChatId().toString()).add(update.getMessage().getText());
+            }else{
+                map8.get(update.getMessage().getChatId().toString()).set(0,update.getMessage().getText());
+            }
+            sql.updateuseremail(map8.get(update.getMessage().getChatId().toString()).get(0),map1.get(update.getMessage().getChatId().toString()).get(0));
+            sql.updateadminemail(map8.get(update.getMessage().getChatId().toString()).get(0),map1.get(update.getMessage().getChatId().toString()).get(0));
+            map1.get(update.getMessage().getChatId().toString()).set(0,update.getMessage().getText());
+            String message = "Email updated successfully.\n\n" + sql.readuserinfo(map1.get(update.getMessage().getChatId().toString()).get(0), map1.get(update.getMessage().getChatId().toString()).get(1));
+            response.setChatId(update.getMessage().getChatId().toString());
+            response.setText(message);
+            testmap.put(update.getMessage().getChatId().toString(),"chooseupdateinfo");
+        }
+        //end user update email
+
+        //start user update staff_id
+        else if (command.equals("2")  && testmap.get(update.getMessage().getChatId().toString()).equals("chooseupdateinfo")) {
+            String message = "Please enter your new staff ID.\n\n(Example: 278888)\n\nReply 0: If you do not wish to proceed with the update.";
+            response.setChatId(update.getMessage().getChatId().toString());
+            response.setText(message);
+            testmap.put(update.getMessage().getChatId().toString(),"userupdatestaffid");
+        }
+        else if (update.getMessage().hasText() && testmap.get(update.getMessage().getChatId().toString()).equals("userupdatestaffid")) {
+            if(map8.get(update.getMessage().getChatId().toString()).size()==0){
+                map8.get(update.getMessage().getChatId().toString()).add(update.getMessage().getText());
+            }else{
+                map8.get(update.getMessage().getChatId().toString()).set(0,update.getMessage().getText());
+            }
+            sql.updateuserstaffid(map8.get(update.getMessage().getChatId().toString()).get(0),map1.get(update.getMessage().getChatId().toString()).get(0));
+            String message = "Staff ID updated successfully.\n\n" + sql.readuserinfo(map1.get(update.getMessage().getChatId().toString()).get(0), map1.get(update.getMessage().getChatId().toString()).get(1)) ;
+            response.setChatId(update.getMessage().getChatId().toString());
+            response.setText(message);
+            testmap.put(update.getMessage().getChatId().toString(),"chooseupdateinfo");
+        }
+        //end user update staff_id
+
+        //start user update name
+        else if (command.equals("3")  && testmap.get(update.getMessage().getChatId().toString()).equals("chooseupdateinfo")) {
+            String message = "Please enter your new name.\n\n(Example: Thomas Wong)\n\nReply 0: If you do not wish to proceed with the update.";
+            response.setChatId(update.getMessage().getChatId().toString());
+            response.setText(message);
+            testmap.put(update.getMessage().getChatId().toString(),"userupdatename");
+        }
+        else if (update.getMessage().hasText() && testmap.get(update.getMessage().getChatId().toString()).equals("userupdatename")) {
+            if(map8.get(update.getMessage().getChatId().toString()).size()==0){
+                map8.get(update.getMessage().getChatId().toString()).add(update.getMessage().getText());
+            }else{
+                map8.get(update.getMessage().getChatId().toString()).set(0,update.getMessage().getText());
+            }
+            sql.updateusername(map8.get(update.getMessage().getChatId().toString()).get(0),map1.get(update.getMessage().getChatId().toString()).get(0));
+            String message = "Name updated successfully.\n\n" + sql.readuserinfo(map1.get(update.getMessage().getChatId().toString()).get(0), map1.get(update.getMessage().getChatId().toString()).get(1)) ;
+            response.setChatId(update.getMessage().getChatId().toString());
+            response.setText(message);
+            testmap.put(update.getMessage().getChatId().toString(),"chooseupdateinfo");
+        }
+        //end user update name
+
+        //start user update icno
+        else if (command.equals("4")  && testmap.get(update.getMessage().getChatId().toString()).equals("chooseupdateinfo")) {
+            String message = "Please enter your new IC no.\n\n(Example: 000516131122)\n\nReply 0: If you do not wish to proceed with the update.";
+            response.setChatId(update.getMessage().getChatId().toString());
+            response.setText(message);
+            testmap.put(update.getMessage().getChatId().toString(),"userupdateicno");
+        }
+        else if (update.getMessage().hasText() && testmap.get(update.getMessage().getChatId().toString()).equals("userupdateicno")) {
+            if(map8.get(update.getMessage().getChatId().toString()).size()==0){
+                map8.get(update.getMessage().getChatId().toString()).add(update.getMessage().getText());
+            }else{
+                map8.get(update.getMessage().getChatId().toString()).set(0,update.getMessage().getText());
+            }
+            sql.updateuseric(map8.get(update.getMessage().getChatId().toString()).get(0),map1.get(update.getMessage().getChatId().toString()).get(0));
+            String message = "IC No updated successfully.\n\n" + sql.readuserinfo(map1.get(update.getMessage().getChatId().toString()).get(0), map1.get(update.getMessage().getChatId().toString()).get(1)) ;
+            response.setChatId(update.getMessage().getChatId().toString());
+            response.setText(message);
+            testmap.put(update.getMessage().getChatId().toString(),"chooseupdateinfo");
+        }
+        //end user update icno
+
+        //start user update phone
+        else if (command.equals("5")  && testmap.get(update.getMessage().getChatId().toString()).equals("chooseupdateinfo")) {
+            String message = "Please enter your new phone no.\n\n(Example: 01151108899)\n\nReply 0: If you do not wish to proceed with the update.";
+            response.setChatId(update.getMessage().getChatId().toString());
+            response.setText(message);
+            testmap.put(update.getMessage().getChatId().toString(),"userupdatephone");
+        }
+        else if (update.getMessage().hasText() && testmap.get(update.getMessage().getChatId().toString()).equals("userupdatephone")) {
+            if(map8.get(update.getMessage().getChatId().toString()).size()==0){
+                map8.get(update.getMessage().getChatId().toString()).add(update.getMessage().getText());
+            }else{
+                map8.get(update.getMessage().getChatId().toString()).set(0,update.getMessage().getText());
+            }
+            sql.updateuserphone(map8.get(update.getMessage().getChatId().toString()).get(0),map1.get(update.getMessage().getChatId().toString()).get(0));
+            String message = "Phone No updated successfully.\n\n" +sql.readuserinfo(map1.get(update.getMessage().getChatId().toString()).get(0), map1.get(update.getMessage().getChatId().toString()).get(1)) ;
+            response.setChatId(update.getMessage().getChatId().toString());
+            response.setText(message);
+            testmap.put(update.getMessage().getChatId().toString(),"chooseupdateinfo");
+        }
+        //end user update phone
+
+        //start user update password
+        else if (command.equals("6")  && testmap.get(update.getMessage().getChatId().toString()).equals("chooseupdateinfo")) {
+            String message = "Please enter your new password.\n\nReply 0: If you do not wish to proceed with the update.";
+            response.setChatId(update.getMessage().getChatId().toString());
+            response.setText(message);
+            testmap.put(update.getMessage().getChatId().toString(),"userupdatepw");
+        }
+        else if (update.getMessage().hasText() && testmap.get(update.getMessage().getChatId().toString()).equals("userupdatepw")) {
+            if(map8.get(update.getMessage().getChatId().toString()).size()==0){
+                map8.get(update.getMessage().getChatId().toString()).add(update.getMessage().getText());
+            }else{
+                map8.get(update.getMessage().getChatId().toString()).set(0,update.getMessage().getText());
+            }
+            sql.updateuserpassword(map8.get(update.getMessage().getChatId().toString()).get(0),map1.get(update.getMessage().getChatId().toString()).get(0));
+            map1.get(update.getMessage().getChatId().toString()).set(1,update.getMessage().getText());
+            String message = "Password updated successfully.\n\n" + sql.readuserinfo(map1.get(update.getMessage().getChatId().toString()).get(0), map1.get(update.getMessage().getChatId().toString()).get(1)) ;
+            response.setChatId(update.getMessage().getChatId().toString());
+            response.setText(message);
+            testmap.put(update.getMessage().getChatId().toString(),"chooseupdateinfo");
+        }
+        //end user update password
+        //end user update info
 
         //start 5. apply admin
         else if (command.equals("5") && testmap.get(update.getMessage().getChatId().toString()).equals("loginusermenu")) {
@@ -273,9 +425,17 @@ public class Bot extends TelegramLongPollingBot {
             String message =
                     "Please choose the school you want to apply as admin.\n"
                             + '\n' +
-                            "2001: SOIS\n"
+                            "2001: SOC\n"
                             + '\n' +
                             "2002: SMMTC\n"
+                            + '\n' +
+                            "2003: CAS\n"
+                            + '\n' +
+                            "2004: SQS\n"
+                            + '\n' +
+                            "2005: SLCP\n"
+                            + '\n' +
+                            "2006: COB\n"
                             + '\n' +
                             "Reply 0: If you do not wish to proceed with the application.\n"
                             + '\n';
@@ -553,12 +713,21 @@ public class Bot extends TelegramLongPollingBot {
 
         //start display application
         else if (command.equals("4") && testmap.get(update.getMessage().getChatId().toString()).equals("loginadminmenu")) {
-            String message = "Here is the list of application for school admin." +
-                    "\n\nReply 1: If you would like to approve admin." +
-                    "\n\nReply 0: If you do not wish to proceed with the approval for application.\n\n";
-            response.setChatId(update.getMessage().getChatId().toString());
-            response.setText(message + sql.dispApplication());
-            testmap.put(update.getMessage().getChatId().toString(), "applicationlist");
+            if (sql.dispApplication().equals("")) {
+                String message = "There is no application for now." +
+                        "\n\nReply 0: Back to menu.\n\n" ;
+                response.setChatId(update.getMessage().getChatId().toString());
+                response.setText(message);
+                testmap.put(update.getMessage().getChatId().toString(), "applicationlist");
+            } else if (!sql.dispApplication().equals("")) {
+                String message = "Here is the list of application for school admin.\n" +
+                        sql.dispApplication() +
+                        "Reply 1: If you would like to approve admin." +
+                        "\n\nReply 0: If you do not wish to proceed with the approval for application.\n\n";
+                response.setChatId(update.getMessage().getChatId().toString());
+                response.setText(message);
+                testmap.put(update.getMessage().getChatId().toString(), "applicationlist");
+            }
         } else if (command.equals("1") && testmap.get(update.getMessage().getChatId().toString()).equals("applicationlist")) {
             String message = "Please enter the admin ID of the admin that you would like to approve. \n"
                     + '\n' +
@@ -592,16 +761,27 @@ public class Bot extends TelegramLongPollingBot {
     }
 
 
-    @Override
-    public String getBotUsername() {
-        // TODO
-        return "STIW3054_koko_bot";
-    }
+//    @Override
+//    public String getBotUsername() {
+//        // TODO
+//        return "STIW3054_koko_bot";
+//    }
+//
+//
+//    @Override
+//    public String getBotToken() {
+//        // TODO
+//        return "5968085786:AAFbSugQxoLAvYnyvI5PL94VZt4AwwBWP-A";
+//    }
+        @Override
+        public String getBotUsername() {
+            // TODO
+            return "ASSIGN2278366BOT";
+        }
 
-
-    @Override
-    public String getBotToken() {
-        // TODO
-        return "5968085786:AAFbSugQxoLAvYnyvI5PL94VZt4AwwBWP-A";
-    }
+            @Override
+            public String getBotToken() {
+                // TODO
+                return "5848383587:AAFVwMMOSLu7WpkhVI7MpkVuwtwEOKmDnq0";
+            }
 }
