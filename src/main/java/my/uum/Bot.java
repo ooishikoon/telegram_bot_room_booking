@@ -534,16 +534,26 @@ public class Bot extends TelegramLongPollingBot {
 
         // start 3. update booking
         else if (command.equals("3") && testmap.get(update.getMessage().getChatId().toString()).equals("loginusermenu")) {
-            String message =
-                    "These are your booking record with us!\n"
-                            + '\n' +
-                            "Your Email: " + map1.get(update.getMessage().getChatId().toString()).get(0) + "\n"
-                    ;
-            String message1 =
-                    "\n\nPlease enter the Room ID you want to update";
-            response.setChatId(update.getMessage().getChatId().toString());
-            response.setText(message + sql.displayAllBookingRecord(map1.get(update.getMessage().getChatId().toString()).get(0)) + message1);
-            testmap.put(update.getMessage().getChatId().toString(), "updatebooking");
+            String updatemessage= sql.readuserbooking(map1.get(update.getMessage().getChatId().toString()).get(0));
+            if ( updatemessage.equals("")) {
+                String message = "There is no booking record for now." +
+                        "\n\nReply 0: Back to menu.\n\n" ;
+                response.setChatId(update.getMessage().getChatId().toString());
+                response.setText(message);
+                testmap.put(update.getMessage().getChatId().toString(), "updatebooking");
+            } else if (! updatemessage.equals("")) {
+                String message =
+                        "These are your booking record with us!\n"
+                                + '\n' +
+                                "Your Email: " + map1.get(update.getMessage().getChatId().toString()).get(0) + "\n"
+                        ;
+                String message1 =
+                        "\nPlease enter the Room ID you want to update" +
+                                "\n\nReply 0: Back to menu.";
+                response.setChatId(update.getMessage().getChatId().toString());
+                response.setText(message + sql.displayAllBookingRecord(map1.get(update.getMessage().getChatId().toString()).get(0)) + message1);
+                testmap.put(update.getMessage().getChatId().toString(), "updatebooking");
+            }
         }
 
         else if (update.getMessage().hasText() && testmap.get(update.getMessage().getChatId().toString()).equals("updatebooking")
