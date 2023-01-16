@@ -11,16 +11,16 @@ import java.util.Map;
 
 public class Bot extends TelegramLongPollingBot {
     SQLite sql = new SQLite();
-    Map<String, ArrayList<String>> map = new HashMap<String, ArrayList<String>>();  //map for user to register new account
-    Map<String, ArrayList<String>> map1 = new HashMap<String, ArrayList<String>>(); //map for user to log in if already has account
-    Map<String, ArrayList<String>> map2 = new HashMap<String, ArrayList<String>>(); //map for user apply admin
-    Map<String, ArrayList<String>> map3 = new HashMap<String, ArrayList<String>>();
-    Map<String, ArrayList<String>> map4 = new HashMap<String, ArrayList<String>>();
-    Map<String, ArrayList<String>> map5 = new HashMap<String, ArrayList<String>>();
-    Map<String, ArrayList<String>> map7 = new HashMap<String, ArrayList<String>>();
-    Map<String, ArrayList<String>> map8 = new HashMap<String, ArrayList<String>>(); //map for user update information
+    Map<String, ArrayList<String>> map = new HashMap<String, ArrayList<String>>();  // map for user to register new account
+    Map<String, ArrayList<String>> map1 = new HashMap<String, ArrayList<String>>(); // map for user to log in if already has account
+    Map<String, ArrayList<String>> map2 = new HashMap<String, ArrayList<String>>(); // map for user apply admin
+    Map<String, ArrayList<String>> map3 = new HashMap<String, ArrayList<String>>(); // map for admin login
+    Map<String, ArrayList<String>> map4 = new HashMap<String, ArrayList<String>>(); // map for register room
+    Map<String, ArrayList<String>> map5 = new HashMap<String, ArrayList<String>>(); // map for update room
+    Map<String, ArrayList<String>> map7 = new HashMap<String, ArrayList<String>>(); // map fordisplay admin application list
+    Map<String, ArrayList<String>> map8 = new HashMap<String, ArrayList<String>>(); // map for user update information
     Map<String, ArrayList<String>> map9 = new HashMap<String, ArrayList<String>>(); // map for booking process
-    Map<String, ArrayList<String>> map10 = new HashMap<String, ArrayList<String>>(); //map for user delete booking
+    Map<String, ArrayList<String>> map10 = new HashMap<String, ArrayList<String>>(); // map for user delete booking
     Map<String, ArrayList<String>> map11 = new HashMap<String, ArrayList<String>>(); // map for update booking
     Map<String, String> testmap = new HashMap<String, String>();
     String admin_status = "Pending approval";
@@ -71,7 +71,10 @@ public class Bot extends TelegramLongPollingBot {
         if (command.equals("/start")
                 || (command.equals("0") && testmap.get(update.getMessage().getChatId().toString()).equals("adminemail"))
                 || (command.equals("0") && testmap.get(update.getMessage().getChatId().toString()).equals("adminpassword"))
-                || (command.equals("1") && testmap.get(update.getMessage().getChatId().toString()).equals("menu"))) {
+                || (command.equals("1") && testmap.get(update.getMessage().getChatId().toString()).equals("menu"))
+                || (command.equals("0") && testmap.get(update.getMessage().getChatId().toString()).equals("mainmenu"))
+                || (command.equals("0") && testmap.get(update.getMessage().getChatId().toString()).equals("loginusermenu"))
+        ) {
             String message = "Hi there! I'm Koko, Bot Virtual Assistant.\n"
                     + '\n' +
                     "Welcome to UUM Room Booking Bot. \n"
@@ -85,7 +88,8 @@ public class Bot extends TelegramLongPollingBot {
                     "Reply 1: If you are a user. \n"
                     + '\n' +
                     "Reply 2: If you are an admin. \n"
-                    + '\n';
+                    + '\n' +
+                    "Reply 0: Back to menu.";
             response.setChatId(update.getMessage().getChatId().toString());
             response.setText(message);
             testmap.put(update.getMessage().getChatId().toString(), "mainmenu");
@@ -93,7 +97,7 @@ public class Bot extends TelegramLongPollingBot {
         //end main menu after enter bot
 
         //user menu after they choose user not admin
-        else if ((command.equals("1") && testmap.get(update.getMessage().getChatId().toString()).equals("mainmenu"))
+        else if ((command.equals("0") && testmap.get(update.getMessage().getChatId().toString()).equals("mainmenu"))
                 || (command.equals("0") && testmap.get(update.getMessage().getChatId().toString()).equals("rusericno"))
                 || (command.equals("0") && testmap.get(update.getMessage().getChatId().toString()).equals("rstaffid"))
                 || (command.equals("0") && testmap.get(update.getMessage().getChatId().toString()).equals("rusername"))
@@ -116,12 +120,15 @@ public class Bot extends TelegramLongPollingBot {
         //end user menu after they choose user not admin
 
         //start register as new user
+        //1. ic no
         else if (command.equals("1") && testmap.get(update.getMessage().getChatId().toString()).equals("usermenu")) {
             String message = "1. First. Please enter your IC No.\n\n(Example: 000619126688)\n\nReply 0: If you do not wish to proceed with the registration.";
             response.setChatId(update.getMessage().getChatId().toString());
             response.setText(message);
             testmap.put(update.getMessage().getChatId().toString(), "rusericno");
-        } else if (update.getMessage().hasText() && testmap.get(update.getMessage().getChatId().toString()).equals("rusericno")) {
+        }
+        //2. staff id
+        else if (update.getMessage().hasText() && testmap.get(update.getMessage().getChatId().toString()).equals("rusericno")) {
             if (map.get(update.getMessage().getChatId().toString()).size() == 0) {
                 map.get(update.getMessage().getChatId().toString()).add(update.getMessage().getText());
             } else {
@@ -131,7 +138,9 @@ public class Bot extends TelegramLongPollingBot {
             response.setChatId(update.getMessage().getChatId().toString());
             response.setText(message);
             testmap.put(update.getMessage().getChatId().toString(), "rstaffid");
-        } else if (update.getMessage().hasText() && testmap.get(update.getMessage().getChatId().toString()).equals("rstaffid")) {
+        }
+        //3. name
+        else if (update.getMessage().hasText() && testmap.get(update.getMessage().getChatId().toString()).equals("rstaffid")) {
             if (map.get(update.getMessage().getChatId().toString()).size() == 1) {
                 map.get(update.getMessage().getChatId().toString()).add(update.getMessage().getText());
             } else {
@@ -141,7 +150,9 @@ public class Bot extends TelegramLongPollingBot {
             response.setChatId(update.getMessage().getChatId().toString());
             response.setText(message);
             testmap.put(update.getMessage().getChatId().toString(), "rusername");
-        } else if (update.getMessage().hasText() && testmap.get(update.getMessage().getChatId().toString()).equals("rusername")) {
+        }
+        //4. phone no
+        else if (update.getMessage().hasText() && testmap.get(update.getMessage().getChatId().toString()).equals("rusername")) {
             if (map.get(update.getMessage().getChatId().toString()).size() == 2) {
                 map.get(update.getMessage().getChatId().toString()).add(update.getMessage().getText());
             } else {
@@ -151,7 +162,9 @@ public class Bot extends TelegramLongPollingBot {
             response.setChatId(update.getMessage().getChatId().toString());
             response.setText(message);
             testmap.put(update.getMessage().getChatId().toString(), "ruserphone");
-        } else if (update.getMessage().hasText() && testmap.get(update.getMessage().getChatId().toString()).equals("ruserphone")) {
+        }
+        //5. email
+        else if (update.getMessage().hasText() && testmap.get(update.getMessage().getChatId().toString()).equals("ruserphone")) {
             if (map.get(update.getMessage().getChatId().toString()).size() == 3) {
                 map.get(update.getMessage().getChatId().toString()).add(update.getMessage().getText());
             } else {
@@ -161,7 +174,9 @@ public class Bot extends TelegramLongPollingBot {
             response.setChatId(update.getMessage().getChatId().toString());
             response.setText(message);
             testmap.put(update.getMessage().getChatId().toString(), "ruseremail");
-        } else if (update.getMessage().hasText() && testmap.get(update.getMessage().getChatId().toString()).equals("ruseremail")) {
+        }
+        //6. password
+        else if (update.getMessage().hasText() && testmap.get(update.getMessage().getChatId().toString()).equals("ruseremail")) {
             if (map.get(update.getMessage().getChatId().toString()).size() == 4) {
                 map.get(update.getMessage().getChatId().toString()).add(update.getMessage().getText());
             } else {
@@ -171,7 +186,9 @@ public class Bot extends TelegramLongPollingBot {
             response.setChatId(update.getMessage().getChatId().toString());
             response.setText(message);
             testmap.put(update.getMessage().getChatId().toString(), "ruserpassword");
-        } else if (update.getMessage().hasText() && testmap.get(update.getMessage().getChatId().toString()).equals("ruserpassword")) {
+        }
+        //registration details
+        else if (update.getMessage().hasText() && testmap.get(update.getMessage().getChatId().toString()).equals("ruserpassword")) {
             if (map.get(update.getMessage().getChatId().toString()).size() == 5) {
                 map.get(update.getMessage().getChatId().toString()).add(update.getMessage().getText());
             } else {
@@ -195,7 +212,7 @@ public class Bot extends TelegramLongPollingBot {
                         + '\n' +
                         "You may log in to proceed with booking. \n"
                         + '\n' +
-                        "Reply 1: Back to menu.\n"
+                        "Reply 0: Back to menu.\n"
                         + '\n';
                 response.setChatId(update.getMessage().getChatId().toString());
                 response.setText(message);
@@ -207,7 +224,7 @@ public class Bot extends TelegramLongPollingBot {
                         '\n' +
                         "You may log in to proceed.\n"
                         + '\n' +
-                        "Reply 1: Back to menu.\n"
+                        "Reply 0: Back to menu.\n"
                         + '\n';
                 response.setChatId(update.getMessage().getChatId().toString());
                 response.setText(message);
@@ -218,12 +235,15 @@ public class Bot extends TelegramLongPollingBot {
         //end register user
 
         // start user log in
+        //1. input email
         else if (command.equals("2") && testmap.get(update.getMessage().getChatId().toString()).equals("usermenu")) {
             String message = "1. Please enter your email.\n\nReply 0: If you do not wish to proceed with the login.";
             response.setChatId(update.getMessage().getChatId().toString());
             response.setText(message);
             testmap.put(update.getMessage().getChatId().toString(), "loginuseremail");
-        } else if (update.getMessage().hasText() && testmap.get(update.getMessage().getChatId().toString()).equals("loginuseremail")) {
+        }
+        //2. input password
+        else if (update.getMessage().hasText() && testmap.get(update.getMessage().getChatId().toString()).equals("loginuseremail")) {
             if (map1.get(update.getMessage().getChatId().toString()).size() == 0) {
                 map1.get(update.getMessage().getChatId().toString()).add(update.getMessage().getText());
             } else {
@@ -233,7 +253,9 @@ public class Bot extends TelegramLongPollingBot {
             response.setChatId(update.getMessage().getChatId().toString());
             response.setText(message);
             testmap.put(update.getMessage().getChatId().toString(), "loginuserpassword");
-        } else if (update.getMessage().hasText() && testmap.get(update.getMessage().getChatId().toString()).equals("loginuserpassword")) {
+        }
+        //check login
+        else if (update.getMessage().hasText() && testmap.get(update.getMessage().getChatId().toString()).equals("loginuserpassword")) {
             if (map1.get(update.getMessage().getChatId().toString()).size() == 1) {
                 map1.get(update.getMessage().getChatId().toString()).add(update.getMessage().getText());
             } else {
@@ -263,8 +285,8 @@ public class Bot extends TelegramLongPollingBot {
 
         //start user logged in main menu
         else if ((command.equals("1")  && testmap.get(update.getMessage().getChatId().toString()).equals("loggedin"))
-                ||(command.equals("1")  && testmap.get(update.getMessage().getChatId().toString()).equals("doneapplyadmin"))
-                ||(command.equals("1")  && testmap.get(update.getMessage().getChatId().toString()).equals("submitapplyadmin"))
+                ||(command.equals("0")  && testmap.get(update.getMessage().getChatId().toString()).equals("doneapplyadmin"))
+                ||(command.equals("0")  && testmap.get(update.getMessage().getChatId().toString()).equals("submitapplyadmin"))
                 ||(command.equals("0")  && testmap.get(update.getMessage().getChatId().toString()).equals("applyadminemail"))
                 ||(command.equals("0")  && testmap.get(update.getMessage().getChatId().toString()).equals("chooseschool"))
                 ||(command.equals("0")  && testmap.get(update.getMessage().getChatId().toString()).equals("chooseupdateinfo"))
@@ -279,6 +301,16 @@ public class Bot extends TelegramLongPollingBot {
                 ||(command.equals("0")  && testmap.get(update.getMessage().getChatId().toString()).equals("deletebookingpassword"))
                 ||(command.equals("0")  && testmap.get(update.getMessage().getChatId().toString()).equals("deletepwwrong"))
                 ||(command.equals("0")  && testmap.get(update.getMessage().getChatId().toString()).equals("deletesuccess"))
+                ||(command.equals("0")  && testmap.get(update.getMessage().getChatId().toString()).equals("updatebooking"))
+                ||(command.equals("0")  && testmap.get(update.getMessage().getChatId().toString()).equals("bookdate"))
+                ||(command.equals("0")  && testmap.get(update.getMessage().getChatId().toString()).equals("availablelist"))
+                ||(command.equals("0")  && testmap.get(update.getMessage().getChatId().toString()).equals("availablelist1"))
+                ||(command.equals("0")  && testmap.get(update.getMessage().getChatId().toString()).equals("bookingpurpose"))
+                ||(command.equals("0")  && testmap.get(update.getMessage().getChatId().toString()).equals("bookingConfirmation"))
+                ||(command.equals("0")  && testmap.get(update.getMessage().getChatId().toString()).equals("bookingsuccess"))
+                ||(command.equals("0")  && testmap.get(update.getMessage().getChatId().toString()).equals("updatedate"))
+                ||(command.equals("0")  && testmap.get(update.getMessage().getChatId().toString()).equals("updatepurpose"))
+                ||(command.equals("0")  && testmap.get(update.getMessage().getChatId().toString()).equals("updateConfirmation"))
 
         ) {
             String message =
@@ -293,7 +325,8 @@ public class Bot extends TelegramLongPollingBot {
                             "4: Delete Booking \n"
                             + '\n' +
                             "5: Apply School Admin \n"
-                            + '\n'
+                            + "\n\n" +
+                            "Reply 0: Back to menu."
                     ;
             response.setChatId(update.getMessage().getChatId().toString());
             response.setText(message);
@@ -442,8 +475,8 @@ public class Bot extends TelegramLongPollingBot {
         // start book new room process
         else if ((command.equals("2") && testmap.get(update.getMessage().getChatId().toString()).equals("loginusermenu"))
                 || (command.equals("2") && testmap.get(update.getMessage().getChatId().toString()).equals("bookingConfirmation"))
+                || (command.equals("0") && testmap.get(update.getMessage().getChatId().toString()).equals("datefull"))
         ){
-
             String message = "Please enter the date you want to book." +
                     "\n\n(Example: yyyy-mm-dd)\n" +
                     "\nReply 0: If you do not wish to proceed with the booking.";
@@ -451,7 +484,7 @@ public class Bot extends TelegramLongPollingBot {
             response.setText(message);
             testmap.put(update.getMessage().getChatId().toString(),"bookdate");
         }
-
+        //check the date input
         else if (update.getMessage().hasText() && testmap.get(update.getMessage().getChatId().toString()).equals("bookdate")) {
             if(map9.get(update.getMessage().getChatId().toString()).size()==0){
                 map9.get(update.getMessage().getChatId().toString()).add(update.getMessage().getText());
@@ -459,21 +492,18 @@ public class Bot extends TelegramLongPollingBot {
                 map9.get(update.getMessage().getChatId().toString()).set(0,update.getMessage().getText());
             }
             sql.checkdate(map9.get(update.getMessage().getChatId().toString()).get(0));
-
-
             String bool = sql.checkdate(map9.get(update.getMessage().getChatId().toString()).get(0));
             if (bool.equals("true")) {
-                String message = "Available Rooms on : " + map9.get(update.getMessage().getChatId().toString()).get(0) + "\n\n" +
-                        "ID\t" + "Room Type\t" + "Time";
+                String message = "Available Rooms on : " + map9.get(update.getMessage().getChatId().toString()).get(0) + "\n\n";
                 String message1 = "\n\nPlease select the slot that you want to book." + "\n\n" +
-                        "Reply 1: Back to menu.\n";
+                        "Reply 0: Back to menu.\n";
                 response.setText(message + sql.displayAvailableRoom(map9.get(update.getMessage().getChatId().toString()).get(0) ) + message1);
                 response.setChatId(update.getMessage().getChatId().toString());
                 testmap.put(update.getMessage().getChatId().toString(),"availablelist");
             } else if (bool.equals("false")) {
                 String message = "The slot on " + map9.get(update.getMessage().getChatId().toString()).get(0) + " is full.\n\n" +
                         "Please another date." + "\n\n" +
-                        "Reply 1: Back to menu.\n";
+                        "Reply 0: Back to menu.\n";
                 response.setChatId(update.getMessage().getChatId().toString());
                 response.setText(message);
                 testmap.put(update.getMessage().getChatId().toString(),"datefull");
@@ -534,18 +564,29 @@ public class Bot extends TelegramLongPollingBot {
 
         // start 3. update booking
         else if (command.equals("3") && testmap.get(update.getMessage().getChatId().toString()).equals("loginusermenu")) {
-            String message =
-                    "These are your booking record with us!\n"
-                            + '\n' +
-                            "Your Email: " + map1.get(update.getMessage().getChatId().toString()).get(0) + "\n"
-                    ;
-            String message1 =
-                    "\n\nPlease enter the Room ID you want to update";
-            response.setChatId(update.getMessage().getChatId().toString());
-            response.setText(message + sql.displayAllBookingRecord(map1.get(update.getMessage().getChatId().toString()).get(0)) + message1);
-            testmap.put(update.getMessage().getChatId().toString(), "updatebooking");
+            String updatemessage= sql.readuserbooking(map1.get(update.getMessage().getChatId().toString()).get(0));
+            if ( updatemessage.equals("")) {
+                String message = "There is no booking record for now." +
+                        "\n\nReply 0: Back to menu.\n\n" ;
+                response.setChatId(update.getMessage().getChatId().toString());
+                response.setText(message);
+                testmap.put(update.getMessage().getChatId().toString(), "updatebooking");
+            } else if (! updatemessage.equals("")) {
+                String message =
+                        "These are your booking record with us!\n"
+                                + '\n' +
+                                "Your Email: " + map1.get(update.getMessage().getChatId().toString()).get(0) + "\n"
+                        ;
+                String message1 =
+                        "\nPlease enter the Room ID you want to update" +
+                                "\n\nReply 0: Back to menu.";
+                response.setChatId(update.getMessage().getChatId().toString());
+                response.setText(message + sql.displayAllBookingRecord(map1.get(update.getMessage().getChatId().toString()).get(0)) + message1);
+                testmap.put(update.getMessage().getChatId().toString(), "updatebooking");
+            }
         }
 
+        //update the new date want to book
         else if (update.getMessage().hasText() && testmap.get(update.getMessage().getChatId().toString()).equals("updatebooking")
         ){
             if(map11.get(update.getMessage().getChatId().toString()).size()==0){
@@ -560,7 +601,7 @@ public class Bot extends TelegramLongPollingBot {
             response.setText(message);
             testmap.put(update.getMessage().getChatId().toString(),"updatedate");
         }
-
+        //display the available room list
         else if (update.getMessage().hasText() && testmap.get(update.getMessage().getChatId().toString()).equals("updatedate")) {
             if(map11.get(update.getMessage().getChatId().toString()).size()==1){
                 map11.get(update.getMessage().getChatId().toString()).add(update.getMessage().getText());
@@ -568,21 +609,19 @@ public class Bot extends TelegramLongPollingBot {
                 map11.get(update.getMessage().getChatId().toString()).set(1,update.getMessage().getText());
             }
             sql.checkdate(map11.get(update.getMessage().getChatId().toString()).get(1));
-
-
             String bool = sql.checkdate(map11.get(update.getMessage().getChatId().toString()).get(1));
             if (bool.equals("true")) {
                 String message = "Available Rooms on : " + map11.get(update.getMessage().getChatId().toString()).get(1) + "\n\n" +
                         "ID\t" + "Room Type\t" + "Time";
                 String message1 = "\n\nPlease select the slot that you want to book." + "\n\n" +
-                        "Reply 1: Back to menu.\n";
+                        "Reply 0: Back to menu.\n";
                 response.setText(message + sql.displayAvailableRoom(map11.get(update.getMessage().getChatId().toString()).get(1) ) + message1);
                 response.setChatId(update.getMessage().getChatId().toString());
                 testmap.put(update.getMessage().getChatId().toString(),"availablelist1");
             } else if (bool.equals("false")) {
                 String message = "The slot on " + map11.get(update.getMessage().getChatId().toString()).get(1) + " is full.\n\n" +
                         "Please another date." + "\n\n" +
-                        "Reply 1: Back to menu.\n";
+                        "Reply 0: Back to menu.\n";
                 response.setChatId(update.getMessage().getChatId().toString());
                 response.setText(message);
                 testmap.put(update.getMessage().getChatId().toString(),"datefull");
@@ -645,15 +684,24 @@ public class Bot extends TelegramLongPollingBot {
 
         //start user delete booking
         else if (command.equals("4")  && testmap.get(update.getMessage().getChatId().toString()).equals("loginusermenu")) {
-            sql.readuserbooking(map1.get(update.getMessage().getChatId().toString()).get(0));
-            String message = "Below are your bookings with us!"+ "\n";
-            String message1="Please enter the room ID of the booking you want to delete.\n"
-                    + '\n' +
-                    "Enter 0: Back to menu \n"
-                    + '\n' ;
-            response.setChatId(update.getMessage().getChatId().toString());
-            response.setText(message+sql.readuserbooking(map1.get(update.getMessage().getChatId().toString()).get(0))+message1);
-            testmap.put(update.getMessage().getChatId().toString(),"choosedeletebooking");
+            System.out.println(map1.get(update.getMessage().getChatId().toString()).get(0));
+            String book= sql.readuserbooking(map1.get(update.getMessage().getChatId().toString()).get(0));
+            if ( book.equals("")) {
+                String message = "There is no application for now." +
+                        "\n\nReply 0: Back to menu.\n\n" ;
+                response.setChatId(update.getMessage().getChatId().toString());
+                response.setText(message);
+                testmap.put(update.getMessage().getChatId().toString(), "choosedeletebooking");
+            } else if (! book.equals("")) {
+                String message = "Below are your bookings with us!"+ "\n";
+                String message1="Please enter the room ID of the booking you want to delete.\n"
+                        + '\n' +
+                        "Enter 0: Back to menu \n"
+                        + '\n' ;
+                response.setChatId(update.getMessage().getChatId().toString());
+                response.setText(message+sql.readuserbooking(map1.get(update.getMessage().getChatId().toString()).get(0))+message1);
+                testmap.put(update.getMessage().getChatId().toString(),"choosedeletebooking");
+            }
         }
         else if (update.getMessage().hasText() && testmap.get(update.getMessage().getChatId().toString()).equals("choosedeletebooking")) {
             if (map10.get(update.getMessage().getChatId().toString()).size() == 0) {
@@ -715,7 +763,9 @@ public class Bot extends TelegramLongPollingBot {
             response.setChatId(update.getMessage().getChatId().toString());
             response.setText(message);
             testmap.put(update.getMessage().getChatId().toString(), "applyadminemail");
-        } else if (update.getMessage().hasText() && testmap.get(update.getMessage().getChatId().toString()).equals("applyadminemail")) {
+        }
+        //choose the school want to apply
+        else if (update.getMessage().hasText() && testmap.get(update.getMessage().getChatId().toString()).equals("applyadminemail")) {
             if (map2.get(update.getMessage().getChatId().toString()).size() == 0) {
                 map2.get(update.getMessage().getChatId().toString()).add(update.getMessage().getText());
             } else {
@@ -741,7 +791,9 @@ public class Bot extends TelegramLongPollingBot {
             response.setChatId(update.getMessage().getChatId().toString());
             response.setText(message);
             testmap.put(update.getMessage().getChatId().toString(), "chooseschool");
-        } else if (update.getMessage().hasText() && testmap.get(update.getMessage().getChatId().toString()).equals("chooseschool")) {
+        }
+        //confirmation message
+        else if (update.getMessage().hasText() && testmap.get(update.getMessage().getChatId().toString()).equals("chooseschool")) {
             if (map2.get(update.getMessage().getChatId().toString()).size() == 1) {
                 map2.get(update.getMessage().getChatId().toString()).add(update.getMessage().getText());
             } else {
@@ -754,20 +806,22 @@ public class Bot extends TelegramLongPollingBot {
                             + '\n' +
                             "Do you confirm the application? Once submitted, it cannot be modify anymore.\n"
                             + '\n' +
-                            "Reply 0: Confirm \n"
+                            "Reply 1: Confirm \n"
                             + '\n' +
-                            "Reply 1: Back to menu.\n"
+                            "Reply 0: Back to menu.\n"
                             + '\n';
             response.setChatId(update.getMessage().getChatId().toString());
             response.setText(message);
             testmap.put(update.getMessage().getChatId().toString(), "submitapplyadmin");
-        } else if (command.equals("0") && testmap.get(update.getMessage().getChatId().toString()).equals("submitapplyadmin")) {
+        }
+        //application successful submit message
+        else if (command.equals("0") && testmap.get(update.getMessage().getChatId().toString()).equals("submitapplyadmin")) {
             sql.applyadmin(map2.get(update.getMessage().getChatId().toString()).get(0), map2.get(update.getMessage().getChatId().toString()).get(1), admin_status);
             String message = "Application sent successfully. \n"
                     + '\n' +
                     "We will get back to you in a short while.\n"
                     + '\n' +
-                    "Reply 1: Back to menu.\n"
+                    "Reply 0: Back to menu.\n"
                     + '\n';
             response.setChatId(update.getMessage().getChatId().toString());
             response.setText(message);
