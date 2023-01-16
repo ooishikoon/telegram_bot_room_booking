@@ -1,5 +1,4 @@
 package my.uum;
-
 import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -7,7 +6,7 @@ import java.util.Calendar;
 public class SQLite {
 
     public static Connection connect() {
-        String jdbc = "jdbc:sqlite:D:/A221-RealTimeProgramming/group-project-koko/database/database.db";
+        String jdbc = "jdbc:sqlite:C:\\Users\\Fanny\\IdeaProjects\\group-project-koko\\database\\database.db";
         Connection con = null;
 
         try {
