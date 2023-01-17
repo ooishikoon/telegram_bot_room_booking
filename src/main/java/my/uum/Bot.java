@@ -74,6 +74,9 @@ public class Bot extends TelegramLongPollingBot {
                 || (command.equals("1") && testmap.get(update.getMessage().getChatId().toString()).equals("menu"))
                 || (command.equals("0") && testmap.get(update.getMessage().getChatId().toString()).equals("mainmenu"))
                 || (command.equals("0") && testmap.get(update.getMessage().getChatId().toString()).equals("loginusermenu"))
+                || (command.equals("0") && testmap.get(update.getMessage().getChatId().toString()).equals("usermenu"))
+                || (command.equals("0") && testmap.get(update.getMessage().getChatId().toString()).equals("loginuseremail"))
+                || (command.equals("0") && testmap.get(update.getMessage().getChatId().toString()).equals("loginuserpassword"))
         ) {
             String message = "Hi there! I'm Koko, Bot Virtual Assistant.\n"
                     + '\n' +
@@ -97,7 +100,7 @@ public class Bot extends TelegramLongPollingBot {
         //end main menu after enter bot
 
         //user menu after they choose user not admin
-        else if ((command.equals("0") && testmap.get(update.getMessage().getChatId().toString()).equals("mainmenu"))
+        else if ((command.equals("1") && testmap.get(update.getMessage().getChatId().toString()).equals("mainmenu"))
                 || (command.equals("0") && testmap.get(update.getMessage().getChatId().toString()).equals("rusericno"))
                 || (command.equals("0") && testmap.get(update.getMessage().getChatId().toString()).equals("rstaffid"))
                 || (command.equals("0") && testmap.get(update.getMessage().getChatId().toString()).equals("rusername"))
@@ -112,7 +115,9 @@ public class Bot extends TelegramLongPollingBot {
                     "1: Register if you are first time user \n"
                     + '\n' +
                     "2: Log in if you already have an account.  \n"
-                    + '\n';
+                    + '\n' +
+                    "Reply 0: Back to menu."
+                    ;
             response.setChatId(update.getMessage().getChatId().toString());
             response.setText(message);
             testmap.put(update.getMessage().getChatId().toString(), "usermenu");
