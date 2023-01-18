@@ -36,7 +36,8 @@ the process.
 For the admin part, the admin must login first only to continue to access the admin menu. The bot will show several menu
 option such as "Register New Room", "Update Room Details", "3: Display Booking Users List" and "Display Admin
 Application" after the admin successfully login. The admin can approve the school admin application and manage rooms by
-replying to the bot with some details needed through this bot.
+replying to the bot with some details needed through this bot. This bot can make the room booking process more
+effective.
 
 ## Flow Diagram of the requirements
 
@@ -54,7 +55,7 @@ replying to the bot with some details needed through this bot.
 
 ## UML Class Diagram
 
-![img.png](images/UML_diagram.png)
+![img.png](images/uml.png)
 
 ## Database Design
 
