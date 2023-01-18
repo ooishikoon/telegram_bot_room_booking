@@ -342,7 +342,7 @@ public class Bot extends TelegramLongPollingBot {
                             "4: Delete Booking \n"
                             + '\n' +
                             "5: Apply School Admin \n"
-                            + "\n\n" +
+                            + "\n" +
                             "Reply 0: Back to menu."
                     ;
             response.setChatId(update.getMessage().getChatId().toString());
