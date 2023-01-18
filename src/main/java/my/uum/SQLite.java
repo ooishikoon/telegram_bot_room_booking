@@ -12,7 +12,7 @@ public class SQLite {
      * This method is to connect the sqlite database
      **/
     public static Connection connect() {
-        String jdbc = "jdbc:sqlite:C:/sqlite/database/database.db";
+        String jdbc = "jdbc:sqlite:C:/Users/MAY NG/Downloads/database (1).db";
         Connection con = null;
 
         try {
@@ -559,33 +559,6 @@ public class SQLite {
     }
 
     /**
-     * This method is used to display the available room list on the certain date
-     **/
-    public String displayAvailableRoom(String userdate){
-        String availablerecord = "";
-
-        String sqlDisplay = "SELECT tbl_availability.available_room_id, tbl_availability.available_date, tbl_availability.available_time, tbl_room.room_type FROM tbl_availability INNER JOIN tbl_room ON tbl_availability.room_id = tbl_room.room_id WHERE tbl_availability.available_status = 'null' AND tbl_availability.available_date = '" + userdate+ "'";
-
-        try (
-                Connection con = SQLite.connect();
-                Statement stmt = con.createStatement();
-                ResultSet rs = stmt.executeQuery(sqlDisplay)){
-
-            // loop through the result set
-            while (rs.next()) {
-                availablerecord +=
-                        "\n" + rs.getInt("available_room_id") +
-                                "\t" + rs.getString("room_type") +
-                                "\t" + rs.getString("available_time");
-
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return availablerecord;
-    }
-
-    /**
      * This method is used to list the information of the booking to be confirm
      **/
     public String displayBookingConfirmation(String availableRoomID){
@@ -734,6 +707,55 @@ public class SQLite {
             e.printStackTrace();
             }
         return users;
+        }
+
+    /**
+     * This method is used to check the room status is null or booked
+     **/
+    public String checkRoomStatus(String date) {
+        String message = "false";
+        String sql = "SELECT * FROM tbl_availability WHERE available_status = 'null' AND available_date = '"+ date +"'";
+
+        try (Connection con = SQLite.connect();
+             Statement stmt = con.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+
+            while (rs.next()) {
+                message = "true";
+            }
+            System.out.println(message);
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return message;
+
+    }
+
+    /**
+     * This method is used to display the available room list on the certain date
+     **/
+    public String displayAvailableRoom(String userdate){
+        String availablerecord = "";
+
+        String sqlDisplay = "SELECT tbl_availability.available_room_id, tbl_availability.available_date, tbl_availability.available_time, tbl_room.room_type FROM tbl_availability INNER JOIN tbl_room ON tbl_availability.room_id = tbl_room.room_id WHERE tbl_availability.available_status = 'null' AND tbl_availability.available_date = '" + userdate+ "'";
+
+        try (
+                Connection con = SQLite.connect();
+                Statement stmt = con.createStatement();
+                ResultSet rs = stmt.executeQuery(sqlDisplay)){
+
+            // loop through the result set
+            while (rs.next()) {
+                availablerecord +=
+                        "\n" + rs.getInt("available_room_id") +
+                                "\t" + rs.getString("room_type") +
+                                "\t" + rs.getString("available_time");
+
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return availablerecord;
         }
 
     }

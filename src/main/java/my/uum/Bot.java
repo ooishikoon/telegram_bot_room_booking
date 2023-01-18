@@ -492,17 +492,21 @@ public class Bot extends TelegramLongPollingBot {
         // start book new room process
         else if ((command.equals("2") && testmap.get(update.getMessage().getChatId().toString()).equals("loginusermenu"))
                 || (command.equals("2") && testmap.get(update.getMessage().getChatId().toString()).equals("bookingConfirmation"))
-                || (command.equals("0") && testmap.get(update.getMessage().getChatId().toString()).equals("datefull"))
+                || (command.equals("0")  && testmap.get(update.getMessage().getChatId().toString()).equals("datefull"))
         ){
             String message = "Please enter the date you want to book." +
-                    "\n\n(Example: yyyy-mm-dd)\n" +
-                    "\nReply 0: If you do not wish to proceed with the booking.";
+                    "\n\n(Example: yyyy-mm-dd)" +
+                    "\n\nRemind: You only can book the room within 10 days from now." +
+                    "\n\nReply 0: If you do not wish to proceed with the booking.";
             response.setChatId(update.getMessage().getChatId().toString());
             response.setText(message);
             testmap.put(update.getMessage().getChatId().toString(),"bookdate");
         }
+
         //check the date input
-        else if (update.getMessage().hasText() && testmap.get(update.getMessage().getChatId().toString()).equals("bookdate")) {
+        else if (update.getMessage().hasText() && testmap.get(update.getMessage().getChatId().toString()).equals("bookdate")
+                ||(command.equals("0") && testmap.get(update.getMessage().getChatId().toString()).equals("datefull"))
+        ) {
             if(map9.get(update.getMessage().getChatId().toString()).size()==0){
                 map9.get(update.getMessage().getChatId().toString()).add(update.getMessage().getText());
             }else{
@@ -510,17 +514,30 @@ public class Bot extends TelegramLongPollingBot {
             }
             sql.checkdate(map9.get(update.getMessage().getChatId().toString()).get(0));
             String bool = sql.checkdate(map9.get(update.getMessage().getChatId().toString()).get(0));
+            String bool1 = sql.checkRoomStatus(map9.get(update.getMessage().getChatId().toString()).get(0));
+            //check room status
             if (bool.equals("true")) {
-                String message = "Available Rooms on : " + map9.get(update.getMessage().getChatId().toString()).get(0) + "\n\n";
-                String message1 = "\n\nPlease select the slot that you want to book." + "\n\n" +
-                        "Reply 0: Back to menu.\n";
-                response.setText(message + sql.displayAvailableRoom(map9.get(update.getMessage().getChatId().toString()).get(0) ) + message1);
-                response.setChatId(update.getMessage().getChatId().toString());
-                testmap.put(update.getMessage().getChatId().toString(),"availablelist");
+                if (bool1.equals("true")){
+                    String message = "Available Rooms on : " + map9.get(update.getMessage().getChatId().toString()).get(0) + "\n";
+                    String message1 = "\n\nPlease select the slot that you want to book." + "\n" +
+                            "\nPlease enter the room ID (4XXX).\n\n" +
+                            "Reply 0: Back to menu.\n";
+                    response.setText(message + sql.displayAvailableRoom(map9.get(update.getMessage().getChatId().toString()).get(0) ) + message1);
+                    response.setChatId(update.getMessage().getChatId().toString());
+                    testmap.put(update.getMessage().getChatId().toString(),"availablelist");
+                }
+                else if (bool1.equals("false")){
+                    String message = "The slot on " + map9.get(update.getMessage().getChatId().toString()).get(0) + " is full.\n\n" +
+                            "Please another date." + "\n\n" +
+                            "Reply 0: To choose another date.\n";
+                    response.setChatId(update.getMessage().getChatId().toString());
+                    response.setText(message);
+                    testmap.put(update.getMessage().getChatId().toString(),"datefull");
+                }
             } else if (bool.equals("false")) {
-                String message = "The slot on " + map9.get(update.getMessage().getChatId().toString()).get(0) + " is full.\n\n" +
+                String message = "The slot on " + map9.get(update.getMessage().getChatId().toString()).get(0) + " is not available to be book yet.\n\n" +
                         "Please another date." + "\n\n" +
-                        "Reply 0: Back to menu.\n";
+                        "Reply 0: To choose another date.\n";
                 response.setChatId(update.getMessage().getChatId().toString());
                 response.setText(message);
                 testmap.put(update.getMessage().getChatId().toString(),"datefull");
@@ -604,22 +621,25 @@ public class Bot extends TelegramLongPollingBot {
         }
 
         //update the new date want to book
-        else if (update.getMessage().hasText() && testmap.get(update.getMessage().getChatId().toString()).equals("updatebooking")
-        ){
+        else if (update.getMessage().hasText() && testmap.get(update.getMessage().getChatId().toString()).equals("updatebooking")){
             if(map11.get(update.getMessage().getChatId().toString()).size()==0){
                 map11.get(update.getMessage().getChatId().toString()).add(update.getMessage().getText());
             }else{
                 map11.get(update.getMessage().getChatId().toString()).set(0,update.getMessage().getText());
             }
             String message = "Please enter the date you want to book." +
-                    "\n\n(Example: yyyy-mm-dd)\n" +
-                    "\nReply 0: If you do not wish to proceed with the booking.";
+                    "\n\n(Example: yyyy-mm-dd)" +
+                    "\n\nRemind: You only can book the room within 10 days from now." +
+                    "\n\nReply 0: If you do not wish to proceed with the booking.";
             response.setChatId(update.getMessage().getChatId().toString());
             response.setText(message);
             testmap.put(update.getMessage().getChatId().toString(),"updatedate");
         }
-        //display the available room list
-        else if (update.getMessage().hasText() && testmap.get(update.getMessage().getChatId().toString()).equals("updatedate")) {
+
+        //check the date input
+        else if (update.getMessage().hasText() && testmap.get(update.getMessage().getChatId().toString()).equals("updatedate")
+                ||(command.equals("0") && testmap.get(update.getMessage().getChatId().toString()).equals("datefull"))
+        ) {
             if(map11.get(update.getMessage().getChatId().toString()).size()==1){
                 map11.get(update.getMessage().getChatId().toString()).add(update.getMessage().getText());
             }else{
@@ -627,18 +647,30 @@ public class Bot extends TelegramLongPollingBot {
             }
             sql.checkdate(map11.get(update.getMessage().getChatId().toString()).get(1));
             String bool = sql.checkdate(map11.get(update.getMessage().getChatId().toString()).get(1));
+            String bool1 = sql.checkRoomStatus(map11.get(update.getMessage().getChatId().toString()).get(1));
+            //check room status
             if (bool.equals("true")) {
-                String message = "Available Rooms on : " + map11.get(update.getMessage().getChatId().toString()).get(1) + "\n\n" +
-                        "ID\t" + "Room Type\t" + "Time";
-                String message1 = "\n\nPlease select the slot that you want to book." + "\n\n" +
-                        "Reply 0: Back to menu.\n";
-                response.setText(message + sql.displayAvailableRoom(map11.get(update.getMessage().getChatId().toString()).get(1) ) + message1);
-                response.setChatId(update.getMessage().getChatId().toString());
-                testmap.put(update.getMessage().getChatId().toString(),"availablelist1");
+                if (bool1.equals("true")){
+                    String message = "Available Rooms on : " + map11.get(update.getMessage().getChatId().toString()).get(1) + "\n";
+                    String message1 = "\n\nPlease select the slot that you want to book." + "\n" +
+                            "\nPlease enter the room ID (4XXX).\n\n" +
+                            "Reply 0: Back to menu.\n";
+                    response.setText(message + sql.displayAvailableRoom(map11.get(update.getMessage().getChatId().toString()).get(1) ) + message1);
+                    response.setChatId(update.getMessage().getChatId().toString());
+                    testmap.put(update.getMessage().getChatId().toString(),"availablelist1");
+                }
+                else if (bool1.equals("false")){
+                    String message = "The slot on " + map11.get(update.getMessage().getChatId().toString()).get(1) + " is full.\n\n" +
+                            "Please another date." + "\n\n" +
+                            "Reply 0: To choose another date.\n";
+                    response.setChatId(update.getMessage().getChatId().toString());
+                    response.setText(message);
+                    testmap.put(update.getMessage().getChatId().toString(),"datefull");
+                }
             } else if (bool.equals("false")) {
-                String message = "The slot on " + map11.get(update.getMessage().getChatId().toString()).get(1) + " is full.\n\n" +
+                String message = "The slot on " + map11.get(update.getMessage().getChatId().toString()).get(1) + " is not available to be book yet.\n\n" +
                         "Please another date." + "\n\n" +
-                        "Reply 0: Back to menu.\n";
+                        "Reply 0: To choose another date.\n";
                 response.setChatId(update.getMessage().getChatId().toString());
                 response.setText(message);
                 testmap.put(update.getMessage().getChatId().toString(),"datefull");
@@ -698,6 +730,7 @@ public class Bot extends TelegramLongPollingBot {
             testmap.put(update.getMessage().getChatId().toString(),"bookingsuccess");
         }
         // end update process
+
 
         //start user delete booking
         else if (command.equals("4")  && testmap.get(update.getMessage().getChatId().toString()).equals("loginusermenu")) {
@@ -905,7 +938,7 @@ public class Bot extends TelegramLongPollingBot {
                 || (command.equals("0") && testmap.get(update.getMessage().getChatId().toString()).equals("uproomtype"))
                 || (command.equals("1") && testmap.get(update.getMessage().getChatId().toString()).equals("submituproom"))
                 || (command.equals("1") && testmap.get(update.getMessage().getChatId().toString()).equals("doneuproom"))
-                || (command.equals("0") && testmap.get(update.getMessage().getChatId().toString()).equals("userslist"))
+                || (command.equals("1") && testmap.get(update.getMessage().getChatId().toString()).equals("userslist"))
                 || (command.equals("0") && testmap.get(update.getMessage().getChatId().toString()).equals("applicationlist"))
                 || (command.equals("0") && testmap.get(update.getMessage().getChatId().toString()).equals("appadminid"))
                 || (command.equals("1") && testmap.get(update.getMessage().getChatId().toString()).equals("doneappadmin"))) {
