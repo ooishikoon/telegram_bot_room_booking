@@ -61,7 +61,7 @@ public class Bot extends TelegramLongPollingBot {
             map5.put(update.getMessage().getChatId().toString(), new ArrayList<String>());
         }
         if (!map6.containsKey(update.getMessage().getChatId().toString())) {
-            map5.put(update.getMessage().getChatId().toString(), new ArrayList<String>());
+            map6.put(update.getMessage().getChatId().toString(), new ArrayList<String>());
         }
         if (!map7.containsKey(update.getMessage().getChatId().toString())) {
             map7.put(update.getMessage().getChatId().toString(), new ArrayList<String>());
