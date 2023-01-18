@@ -103,4 +103,4 @@ effective.
 https://zhiyi16510.github.io/JavaDoc%20(Grp%20Proj)/index.html
 
 <br><br>
-<<p align="center"><img align="center" alt="gif" src="https://github.com/STIW3054-A221/group-project-koko/blob/master/gif/pompom-pompomfriends.gif" width="150" height="150"/></p>
+<p align="center"><img align="center" alt="gif" src="https://github.com/STIW3054-A221/group-project-koko/blob/master/gif/pompom-pompomfriends.gif" width="200" height="200"/></p>
