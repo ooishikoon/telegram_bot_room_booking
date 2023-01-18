@@ -60,7 +60,7 @@ effective.
 
 ## Database Design
 
-<img src= "images/database_design.jpeg">
+<img src= "images/database_design.png">
 
 ## Youtube Presentation
 <img alt="gif" src="https://github.com/STIW3054-A221/group-project-koko/blob/master/gif/youtube-logo.gif" width="70" height="70"/>
