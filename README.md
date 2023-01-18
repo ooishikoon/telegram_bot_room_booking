@@ -13,7 +13,8 @@
 
 ## Title of your application
 
-Koko Room Booking System
+<img alt="gif" src="https://github.com/STIW3054-A221/group-project-koko/blob/master/gif/mochi-peach.gif" width="100" height="100"/>  Koko Room Booking System  <img alt="gif" src="https://github.com/STIW3054-A221/group-project-koko/blob/master/gif/mochi-peach.gif" width="100" height="100"/>
+<br>
 
 ## Introduction
 
@@ -62,6 +63,8 @@ effective.
 <img src= "images/database_design.jpeg">
 
 ## Youtube Presentation
+<img alt="gif" src="https://github.com/STIW3054-A221/group-project-koko/blob/master/gif/youtube-logo.gif" width="70" height="70"/>
+<br>
 
 ## References (Not less than 20)
 
@@ -98,3 +101,6 @@ effective.
 ## JavaDoc
 
 https://zhiyi16510.github.io/JavaDoc%20(Grp%20Proj)/index.html
+
+<br><br>
+<p align="center"><img align="center" alt="gif" src="https://github.com/STIW3054-A221/group-project-koko/blob/master/gif/pompom-pompomfriends.gif" width="200" height="200"/></p>
