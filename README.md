@@ -13,9 +13,7 @@
 
 ## Title of your application
 
-<img alt="gif" src="https://github.com/STIW3054-A221/group-project-koko/blob/master/gif/mochi-peach.gif" width="50" height="50"/> 
-Koko Room Booking System
-<img alt="gif" src="https://github.com/STIW3054-A221/group-project-koko/blob/master/gif/mochi-peach.gif" width="50" height="50"/>
+<img alt="gif" src="https://github.com/STIW3054-A221/group-project-koko/blob/master/gif/mochi-peach.gif" width="50" height="50"/>  Koko Room Booking System  <img alt="gif" src="https://github.com/STIW3054-A221/group-project-koko/blob/master/gif/mochi-peach.gif" width="50" height="50"/>
 <br>
 
 ## Introduction
