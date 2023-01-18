@@ -12,7 +12,7 @@ public class SQLite {
      * This method is to connect the sqlite database
      **/
     public static Connection connect() {
-        String jdbc = "jdbc:sqlite:C:/Users/MAY NG/Downloads/database (1).db";
+        String jdbc = "jdbc:sqlite:C:/sqlite/database/database.db";
         Connection con = null;
 
         try {
