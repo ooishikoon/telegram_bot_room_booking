@@ -9,6 +9,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * This class is for enabling the telegram bot to run according to specific command and user input
+ * @author koko
+ **/
 public class Bot extends TelegramLongPollingBot {
     SQLite sql = new SQLite();
     Map<String, ArrayList<String>> map = new HashMap<String, ArrayList<String>>();  // map for user to register new account
@@ -17,7 +21,8 @@ public class Bot extends TelegramLongPollingBot {
     Map<String, ArrayList<String>> map3 = new HashMap<String, ArrayList<String>>(); // map for admin login
     Map<String, ArrayList<String>> map4 = new HashMap<String, ArrayList<String>>(); // map for register room
     Map<String, ArrayList<String>> map5 = new HashMap<String, ArrayList<String>>(); // map for update room
-    Map<String, ArrayList<String>> map7 = new HashMap<String, ArrayList<String>>(); // map fordisplay admin application list
+    Map<String, ArrayList<String>> map6 = new HashMap<String, ArrayList<String>>(); // map for display booking users list
+    Map<String, ArrayList<String>> map7 = new HashMap<String, ArrayList<String>>(); // map for display admin application list
     Map<String, ArrayList<String>> map8 = new HashMap<String, ArrayList<String>>(); // map for user update information
     Map<String, ArrayList<String>> map9 = new HashMap<String, ArrayList<String>>(); // map for booking process
     Map<String, ArrayList<String>> map10 = new HashMap<String, ArrayList<String>>(); // map for user delete booking
@@ -25,6 +30,10 @@ public class Bot extends TelegramLongPollingBot {
     Map<String, String> testmap = new HashMap<String, String>();
     String admin_status = "Pending approval";
 
+    /**
+     * This method is to update commands and input given by the user
+     * Instructions are listed out
+     **/
     @Override
     public void onUpdateReceived(Update update) {
         System.out.println(update.getMessage().getText());
@@ -49,6 +58,9 @@ public class Bot extends TelegramLongPollingBot {
             map4.put(update.getMessage().getChatId().toString(), new ArrayList<String>());
         }
         if (!map5.containsKey(update.getMessage().getChatId().toString())) {
+            map5.put(update.getMessage().getChatId().toString(), new ArrayList<String>());
+        }
+        if (!map6.containsKey(update.getMessage().getChatId().toString())) {
             map5.put(update.getMessage().getChatId().toString(), new ArrayList<String>());
         }
         if (!map7.containsKey(update.getMessage().getChatId().toString())) {
@@ -820,7 +832,7 @@ public class Bot extends TelegramLongPollingBot {
             testmap.put(update.getMessage().getChatId().toString(), "submitapplyadmin");
         }
         //application successful submit message
-        else if (command.equals("0") && testmap.get(update.getMessage().getChatId().toString()).equals("submitapplyadmin")) {
+        else if (command.equals("1") && testmap.get(update.getMessage().getChatId().toString()).equals("submitapplyadmin")) {
             sql.applyadmin(map2.get(update.getMessage().getChatId().toString()).get(0), map2.get(update.getMessage().getChatId().toString()).get(1), admin_status);
             String message = "Application sent successfully. \n"
                     + '\n' +
@@ -893,6 +905,7 @@ public class Bot extends TelegramLongPollingBot {
                 || (command.equals("0") && testmap.get(update.getMessage().getChatId().toString()).equals("uproomtype"))
                 || (command.equals("1") && testmap.get(update.getMessage().getChatId().toString()).equals("submituproom"))
                 || (command.equals("1") && testmap.get(update.getMessage().getChatId().toString()).equals("doneuproom"))
+                || (command.equals("0") && testmap.get(update.getMessage().getChatId().toString()).equals("userslist"))
                 || (command.equals("0") && testmap.get(update.getMessage().getChatId().toString()).equals("applicationlist"))
                 || (command.equals("0") && testmap.get(update.getMessage().getChatId().toString()).equals("appadminid"))
                 || (command.equals("1") && testmap.get(update.getMessage().getChatId().toString()).equals("doneappadmin"))) {
@@ -903,7 +916,7 @@ public class Bot extends TelegramLongPollingBot {
                             + '\n' +
                             "2: Update Room Details \n"
                             + '\n' +
-                            "3: Display Room Availability \n"
+                            "3: Display Booking Users List \n"
                             + '\n' +
                             "4: Display Admin Application \n"
                             + '\n';
@@ -1069,6 +1082,24 @@ public class Bot extends TelegramLongPollingBot {
             testmap.put(update.getMessage().getChatId().toString(), "doneuproom");
         } //end update room
 
+        //start display users and booked room list
+        else if (command.equals("3") && testmap.get(update.getMessage().getChatId().toString()).equals("loginadminmenu")) {
+            if (sql.displayUserslist().equals("")) {
+                String message = "There is no user available." +
+                        "\n\nReply 0: Back to menu. \n\n" ;
+                response.setChatId(update.getMessage().getChatId().toString());
+                response.setText(message);
+                testmap.put(update.getMessage().getChatId().toString(), "userslist");
+            } else if (!sql.dispApplication().equals("")) {
+                String message = "Here is the list of users available.\n" +
+                        sql.displayUserslist() +
+                        "\n\nReply 0: Back to menu. \n\n";
+                response.setChatId(update.getMessage().getChatId().toString());
+                response.setText(message);
+                testmap.put(update.getMessage().getChatId().toString(), "usersList");
+            }
+        } //end display list
+
         //start display application
         else if (command.equals("4") && testmap.get(update.getMessage().getChatId().toString()).equals("loginadminmenu")) {
             if (sql.dispApplication().equals("")) {
@@ -1118,14 +1149,18 @@ public class Bot extends TelegramLongPollingBot {
         }
     }
 
-
+    /**
+     * This method is to retrieve the username of the telegram bot
+     **/
     @Override
     public String getBotUsername() {
         // TODO
         return "STIW3054_koko_bot";
     }
 
-
+    /**
+     * This method is to retrieve the api token of the telegram bot
+     **/
     @Override
     public String getBotToken() {
         // TODO

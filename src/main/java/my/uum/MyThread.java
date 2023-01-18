@@ -3,6 +3,10 @@ package my.uum;
 import java.time.Duration;
 import java.util.*;
 
+/**
+ * This class is to implement and run Thread method
+ * @author koko
+ **/
 public class MyThread extends Thread{
 
     /**
