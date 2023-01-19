@@ -79,50 +79,50 @@ User
 
 5. Update Booking
 
-   <img src= "images/output/u4_updateB_01.jpg" width=300>
-   <img src= "images/output/u4_updateB_02.jpg" width=300>
-   <img src= "images/output/u4_updateB_03.jpg" width=300>
-   <img src= "images/output/u4_updateB_04.jpg" width=300>
+   <img src= "images/output/u4_updateB_01.jpg" width=400>
+   <img src= "images/output/u4_updateB_02.jpg" width=400>
+   <img src= "images/output/u4_updateB_03.jpg" width=400>
+   <img src= "images/output/u4_updateB_04.jpg" width=400>
 
    If the date enter is not available to book yet or the time slot is full on the date.
 
-   <img src= "images/output/u4_updateB_05.jpg" width=300>
+   <img src= "images/output/u4_updateB_05.jpg" width=400>
    
 6. Delete Booking
 
-   <img src= "images/output/u5_deleteB_01.jpg" width=300>
-   <img src= "images/output/u5_deleteB_02.jpg" width=300>
-   <img src= "images/output/u5_deleteB_03.jpg" width=300>
+   <img src= "images/output/u5_deleteB_01.jpg" width=400>
+   <img src= "images/output/u5_deleteB_02.jpg" width=400>
+   <img src= "images/output/u5_deleteB_03.jpg" width=400>
    
 7. Apply Admin
 
-   <img src= "images/output/u6_apply_admin_01.jpg" width=300>
-   <img src= "images/output/u6_apply_admin_02.jpg" width=300>
-   <img src= "images/output/u6_apply_admin_03.jpg" width=300>
+   <img src= "images/output/u6_apply_admin_01.jpg" width=400>
+   <img src= "images/output/u6_apply_admin_02.jpg" width=400>
+   <img src= "images/output/u6_apply_admin_03.jpg" width=400>
 
 
 Admin
 1. Login
 
-   <img src= "images/output/a_login_01.png" width=300>
-   <img src= "images/output/a_login_02.png" width=300>
-   <img src= "images/output/a_login_03.png" width=300>
-   <img src= "images/output/a_login_04.png" width=300>
+   <img src= "images/output/a_login_01.png" width=400>
+   <img src= "images/output/a_login_02.png" width=400>
+   <img src= "images/output/a_login_03.png" width=400>
+   <img src= "images/output/a_login_04.png" width=400>
 
 2. Register room
 
-   <img src= "images/output/a1_registerR_01.png" width=300>
-   <img src= "images/output/a1_registerR_02.png" width=300>
-   <img src= "images/output/a1_registerR_03.png" width=300>
-   <img src= "images/output/a1_registerR_04.png" width=300>
+   <img src= "images/output/a1_registerR_01.png" width=400>
+   <img src= "images/output/a1_registerR_02.png" width=400>
+   <img src= "images/output/a1_registerR_03.png" width=400>
+   <img src= "images/output/a1_registerR_04.png" width=400>
    
 3. Update room
 
-   <img src= "images/output/a2_updateR_01.png" width=300>
-   <img src= "images/output/a2_updateR_02.png" width=300>
-   <img src= "images/output/a2_updateR_03.png" width=300>
-   <img src= "images/output/a2_updateR_04.png" width=300>
-   <img src= "images/output/a2_updateR_05.png" width=300>
+   <img src= "images/output/a2_updateR_01.png" width=400>
+   <img src= "images/output/a2_updateR_02.png" width=400>
+   <img src= "images/output/a2_updateR_03.png" width=400>
+   <img src= "images/output/a2_updateR_04.png" width=400>
+   <img src= "images/output/a2_updateR_05.png" width=400>
    
 4. Display booking user list
 
