@@ -71,10 +71,10 @@ User
 
 4. Booking
 
-   <img src= "images/output/u3_booking_01.png" height=200>
-   <img src= "images/output/u3_booking_02.png" height=200>
-   <img src= "images/output/u3_booking_03.png" height=100% width=430>
-   <img src= "images/output/u3_booking_04.png" height=100% width=400>
+   <img src= "images/output/u3_booking_01.png" height=200 width=410>
+   <img src= "images/output/u3_booking_02.png" height=200 width=410>
+   <img src= "images/output/u3_booking_03.png" height=100% width=410>
+   <img src= "images/output/u3_booking_04.png" height=100% width=410>
    <img src= "images/output/u3_booking_05.png" height=160 width=860>
 
 5. Update Booking
