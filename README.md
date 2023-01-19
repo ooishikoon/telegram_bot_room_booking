@@ -126,7 +126,13 @@ Admin
    
 4. Display booking user list
 
+   <img src= "images/output/a3_displayUser_01.png" width=350>
+   <img src= "images/output/a3_displayUser_02.png" width=350>
+
 5. Approve admin
+
+   <img src= "images/output/a4_approveAdmin_01.png" width=350>
+   <img src= "images/output/a4_approveAdmin_02.png" width=350>
 
 ## Use Case Diagram
 
