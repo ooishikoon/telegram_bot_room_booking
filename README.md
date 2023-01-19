@@ -104,25 +104,25 @@ User
 Admin
 1. Login
 
-   <img src= "images/output/a_login_01.png" height=350>
-   <img src= "images/output/a_login_02.png" height=350>
-   <img src= "images/output/a_login_03.png" height=350>
-   <img src= "images/output/a_login_04.png" height=350>
+   <img src= "images/output/a_login_01.png" width=350>
+   <img src= "images/output/a_login_02.png" width=350>
+   <img src= "images/output/a_login_03.png" width=350>
+   <img src= "images/output/a_login_04.png" width=350>
 
 2. Register room
 
-   <img src= "images/output/a1_registerR_01.png" height=350>
-   <img src= "images/output/a1_registerR_02.png" height=350>
-   <img src= "images/output/a1_registerR_03.png" height=350>
-   <img src= "images/output/a1_registerR_04.png" height=350>
+   <img src= "images/output/a1_registerR_01.png" width=350>
+   <img src= "images/output/a1_registerR_02.png" width=350>
+   <img src= "images/output/a1_registerR_03.png" width=350>
+   <img src= "images/output/a1_registerR_04.png" width=350>
    
 3. Update room
 
-   <img src= "images/output/a2_updateR_01.png" height=350>
-   <img src= "images/output/a2_updateR_02.png" height=350>
-   <img src= "images/output/a2_updateR_03.png" height=350>
-   <img src= "images/output/a2_updateR_04.png" height=350>
-   <img src= "images/output/a2_updateR_05.png" height=350>
+   <img src= "images/output/a2_updateR_01.png" width=350>
+   <img src= "images/output/a2_updateR_02.png" width=350>
+   <img src= "images/output/a2_updateR_03.png" width=350>
+   <img src= "images/output/a2_updateR_04.png" width=350>
+   <img src= "images/output/a2_updateR_05.png" width=350>
    
 4. Display booking user list
 
