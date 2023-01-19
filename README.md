@@ -63,7 +63,7 @@ effective.
 <img src= "images/database_design.png">
 
 ## Youtube Presentation
-<img alt="gif" src="https://github.com/STIW3054-A221/group-project-koko/blob/master/gif/youtube-logo.gif" width="70" height="70"/>
+<p><img alt="gif" src="https://github.com/STIW3054-A221/group-project-koko/blob/master/gif/youtube-logo.gif" width="100" height="70"/> https://youtu.be/oqIq5wxL1kY </p>
 <br>
 
 ## References (Not less than 20)
