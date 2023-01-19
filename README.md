@@ -123,6 +123,7 @@ Admin
    <img src= "images/output/a2_updateR_03.png" width=350>
    <img src= "images/output/a2_updateR_04.png" width=350>
    <img src= "images/output/a2_updateR_05.png" width=350>
+   <img src= "images/output/a2_updateR_06.png" width=350>
    
 4. Display booking user list
 
