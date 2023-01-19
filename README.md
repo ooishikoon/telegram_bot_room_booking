@@ -49,6 +49,85 @@ effective.
 ## User manual/guideline for testing the system
 
 ## Result/Output (Screenshot of the output)
+User
+1. Register
+
+   <img src= "images/output/u1_register_01.png" height=200>
+   <img src= "images/output/u1_register_02.png" height=200>
+   <img src= "images/output/u1_register_03.png" height=200>
+   <img src= "images/output/u1_register_04.png" height=200>
+   
+2. Login
+
+   <img src= "images/output/u1_login_01.png" height=200>
+   <img src= "images/output/u1_login_02.png" height=200>
+
+3. Update Personal Info
+
+   <img src= "images/output/u2_updateU_01.png" height=200>
+   <img src= "images/output/u2_updateU_02.png" height=200>
+   <img src= "images/output/u2_updateU_03.png" height=200>
+   <img src= "images/output/u2_updateU_04.png" height=200>
+
+4. Booking
+
+   <img src= "images/output/u3_booking_01.png" height=200>
+   <img src= "images/output/u3_booking_02.png" height=200>
+   <img src= "images/output/u3_booking_03.png" height=200>
+   <img src= "images/output/u3_booking_04.png" height=200>
+   <img src= "images/output/u3_booking_05.png" height=160>
+
+5. Update Booking
+
+   <img src= "images/output/u4_updateB_01.jpg" width=200>
+   <img src= "images/output/u4_updateB_02.jpg" width=200>
+   <img src= "images/output/u4_updateB_03.jpg" width=200>
+   <img src= "images/output/u4_updateB_04.jpg" width=200>
+
+   If the date enter is not available to book yet or the time slot is full on the date.
+
+   <img src= "images/output/u4_updateB_05.jpg" width=200>
+   
+6. Delete Booking
+
+   <img src= "images/output/u5_deleteB_01.jpg" width=200>
+   <img src= "images/output/u5_deleteB_02.jpg" width=200>
+   <img src= "images/output/u5_deleteB_03.jpg" width=200>
+   
+7. Apply Admin
+
+   <img src= "images/output/u6_apply_admin_01.jpg" width=200>
+   <img src= "images/output/u6_apply_admin_02.jpg" width=200>
+   <img src= "images/output/u6_apply_admin_03.jpg" width=200>
+
+
+Admin
+1. Login
+
+   <img src= "images/output/a_login_01.png" width=200>
+   <img src= "images/output/a_login_02.png" width=200>
+   <img src= "images/output/a_login_03.png" width=200>
+   <img src= "images/output/a_login_04.png" width=200>
+
+2. Register room
+
+   <img src= "images/output/a1_registerR_01.png" width=200>
+   <img src= "images/output/a1_registerR_02.png" width=200>
+   <img src= "images/output/a1_registerR_03.png" width=200>
+   <img src= "images/output/a1_registerR_04.png" width=200>
+   
+3. Update room
+
+   <img src= "images/output/a2_updateR_01.png" width=200>
+   <img src= "images/output/a2_updateR_02.png" width=200>
+   <img src= "images/output/a2_updateR_03.png" width=200>
+   <img src= "images/output/a2_updateR_04.png" width=200>
+   <img src= "images/output/a2_updateR_05.png" width=200>
+   <img src= "images/output/a2_updateR_06.png" width=200>
+   
+4. Display booking user list
+
+5. Approve admin
 
 ## Use Case Diagram
 
