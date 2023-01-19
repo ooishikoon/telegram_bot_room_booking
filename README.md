@@ -53,9 +53,9 @@ User
 1. Register
 
    <img src= "images/output/u1_register_01.png" height=200>
-   <img src= "images/output/u1_register_02.png" height=200>
-   <img src= "images/output/u1_register_03.png" height=200>
-   <img src= "images/output/u1_register_04.png" height=200>
+   <img src= "images/output/u1_register_02.png" height=100% width=400>
+   <img src= "images/output/u1_register_03.png" height=100% width=360>
+   <img src= "images/output/u1_register_04.png" height=300 width=400>
    
 2. Login
 
@@ -66,16 +66,16 @@ User
 
    <img src= "images/output/u2_updateU_01.png" height=200>
    <img src= "images/output/u2_updateU_02.png" height=200>
-   <img src= "images/output/u2_updateU_03.png" height=200>
+   <img src= "images/output/u2_updateU_03.png" height=100% width=410>
    <img src= "images/output/u2_updateU_04.png" height=200>
 
 4. Booking
 
    <img src= "images/output/u3_booking_01.png" height=200>
    <img src= "images/output/u3_booking_02.png" height=200>
-   <img src= "images/output/u3_booking_03.png" height=200>
-   <img src= "images/output/u3_booking_04.png" height=200>
-   <img src= "images/output/u3_booking_05.png" height=160>
+   <img src= "images/output/u3_booking_03.png" height=100% width=430>
+   <img src= "images/output/u3_booking_04.png" height=100% width=400>
+   <img src= "images/output/u3_booking_05.png" height=160 width=860>
 
 5. Update Booking
 
