@@ -105,6 +105,7 @@ application to let the user check. If the details are correct, the user may repl
 the application process is sent successful, will get back to the user to process the admin approval. Along the process,
 user may reply "0" back to main menu.
 
+
 Admin
 
 1. Login
