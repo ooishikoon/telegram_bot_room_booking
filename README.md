@@ -64,7 +64,7 @@ password is provided in order to log in. Along the process, user may reply "0" b
 
 3. Update Personal Info
 
-After log in, user may reply "1" and enter the numbering of user's information they want to edit. User need to enter the
+After log in, user may reply "1" and enter the numbering of user's information they want to edit. User need to enter the 
 new information and the user information will be updated successfully and the bot will send the latest info of user. 
 Along the process, user may reply "0" back to main menu.
 
@@ -76,6 +76,31 @@ that the date is not available yet. After user input valid date, the bot will li
 room type, booking date and time on the date input by user. User may reply room ID for the slot that they desired. 
 Then, user need to input their booking purpose and reply "1" to confirm their booking. Then, user booking is confirmed. 
 Along the process, user may reply "0" back to main menu.
+
+5. Update Room
+After log in, user may reply "3" to proceed the update room booking details action. The system will display all the
+booking records with all the details that the user had booked before exclude the past date. The user can review and
+check which booking that they want to update by entering the room ID. Then the system will let the user enters another
+date to check is the date available to be booked. If the date enter exceed 10 days duration or there are no any free 
+slots on the date, the bot will inform the user the date is not available yet. After user input valid date, the bot will
+list the slot available with room ID, room type, booking date and time on the date input by user. User may reply room ID
+for the slot that they desired. Then, user need to input their booking purpose and reply "1" to confirm their booking
+update. Then, user booking is updated. Along the process, user may reply "0" back to main menu.
+
+6. Delete Room
+After log in, user may reply "4" to proceed delete room booking action. Same with the update action, the system will
+display all the booking records with all the details that the user had booked before exclude the past date. The user
+can review and check which booking that they want to delete by entering the room ID. Then, the bot will display the
+booking record details to alert the user checks is it the booking record that the user want to delete. The user may
+reply "1" to confirm or "0" back to menu. The bot will require the user to enter their password to double confirm the
+deletion action. Then, user booking is deleted successful. Along the process, user may reply "0" back to main menu.
+
+7. Apply Admin
+After log in, user may reply "5" to proceed delete room booking action. First, the bot require the user to enter their
+email to apply as the school admin and also the school ID that they want to apply. Then the bot will display the 
+application to let the user check. If the details are correct, the user may reply "1" to confirm the application. Then,
+the application process is sent successful, will get back to the user to process the admin approval. Along the process,
+user may reply "0" back to main menu.
 
 Admin
 
