@@ -48,15 +48,57 @@ effective.
 
 ## User manual/guideline for testing the system
 
+Admin
+
+1. Login
+
+When the bot is started, the admin needs to reply 2 to the bot and login to access the admin menu by replying to the bot
+with the email and password. If either one email or password is entered wrongly, then the bot will send a message which
+shows "Login failed" and the admin needs to reply 1 to back to the main menu, then only can proceed with the login
+process again. When the admin is proceeding with the login process and wishes to exit it, they can reply 0 to the bot
+and go back to the main menu. After successful login, the bot will send a message showing the menu options to the admin
+to choose.
+
+2. Register New Room
+
+Admin can reply 1 to the bot to choose to proceed with registering the new room. After entering the registration process
+of new room, the admin needs to key in the room details asked from the bot, such as room ID, room description, room type
+and room maximum capacity. Before the registration process is done, the bot will send a message which shows the details
+that the admin entered in the process to ask for confirmation from the admin. If the admin confirms the details, the
+admin can reply 0 to the bot, and the bot will send a message showing the room has been registered successfully. If the
+admin realizes that the details are wrongly entered, the admin can reply 1 to the bot and go back to the menu to reenter
+the process of registering a new room. Same as the login process, if the admin wants to exit the registration process,
+the admin can reply 0 to the bot anytime to exit this process.
+
+3. Update Room Details
+
+If the admin would like to update room details, the admin can reply 2 to the bot after successful login. Then the bot
+will ask for the room ID from the admin that the admin wants to update the details. If the room Id does not exist in the
+database, the bot will send a message showing "Room does not exist. Please try again or perform register if it is a new
+room." and the admin needs to reply 1 to the bot to go back to the menu to reenter the process of updating room details.
+Besides, if the room ID entered by the admin exists in the database, the bot will continue to send messages asking for
+the room details that the admin wants to update. The admin can just enter the new details of that room by following the
+instruction. Same as the process of registering a new room, before the updating process is done, the bot will send a
+message which shows the room details that the admin entered just and ask for confirmation from the admin. The admin can
+just reply 0 to confirm the details, and then the bot will send a message to show that the room details have been
+updated successfully. If the admin realizes that the details are wrongly entered, the admin can reply 1 to the bot and
+go back to the menu to reenter the process of updating the room details. Moreover, if the admin would like to exit the
+updating process, the admin can reply 0 to the bot anytime to exit the process and go back to the menu.
+
+4. Display Booking Users List
+5. Display Admin Application
+
 ## Result/Output (Screenshot of the output)
+
 User
+
 1. Register
 
    <img src= "images/output/u1_register_01.png" height=200>
    <img src= "images/output/u1_register_02.png" height=100% width=400>
    <img src= "images/output/u1_register_03.png" height=100% width=360>
    <img src= "images/output/u1_register_04.png" height=300 width=400>
-   
+
 2. Login
 
    <img src= "images/output/u1_login_01.png" height=200>
