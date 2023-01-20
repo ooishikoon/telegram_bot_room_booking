@@ -78,6 +78,7 @@ Then, user need to input their booking purpose and reply "1" to confirm their bo
 Along the process, user may reply "0" back to main menu.
 
 5. Update Room
+
 After log in, user may reply "3" to proceed the update room booking details action. The system will display all the
 booking records with all the details that the user had booked before exclude the past date. The user can review and
 check which booking that they want to update by entering the room ID. Then the system will let the user enters another
@@ -88,6 +89,7 @@ for the slot that they desired. Then, user need to input their booking purpose a
 update. Then, user booking is updated. Along the process, user may reply "0" back to main menu.
 
 6. Delete Room
+
 After log in, user may reply "4" to proceed delete room booking action. Same with the update action, the system will
 display all the booking records with all the details that the user had booked before exclude the past date. The user
 can review and check which booking that they want to delete by entering the room ID. Then, the bot will display the
@@ -96,6 +98,7 @@ reply "1" to confirm or "0" back to menu. The bot will require the user to enter
 deletion action. Then, user booking is deleted successful. Along the process, user may reply "0" back to main menu.
 
 7. Apply Admin
+
 After log in, user may reply "5" to proceed delete room booking action. First, the bot require the user to enter their
 email to apply as the school admin and also the school ID that they want to apply. Then the bot will display the 
 application to let the user check. If the details are correct, the user may reply "1" to confirm the application. Then,
