@@ -115,7 +115,12 @@ go back to the menu to reenter the process of updating the room details. Moreove
 updating process, the admin can reply 0 to the bot anytime to exit the process and go back to the menu.
 
 4. Display Booking Users List
+
+To display users and booked room, the admin  should reply 3 after successfully login into the admin section. The bot will then display the user email, booking information (eg. booking purpose, booking date, and booking time), and information about the booked rom (eg. room ID, room description, room maximum capacity, and room type). The admin will be able to view any rooms that are booked at the moment. To return to admin menu list, the admin should reply 0.
+
 5. Display Admin Application
+
+The admin can reply 4 to view admin applications submitted by the users after login into the admin section. The screen will then display the user's email, staff ID, name, IC number, phone number, school ID, admin ID and the status whether the application has been approved or not. To cancel the approval process, the admin can enter 0 to exit the process. To proceed with approving a certain user as an admin, the admin should then reply 1 and enter the admin ID of the user to approve its application. After the admin replying the admin ID, the admin will then be asked to redirect back to the admin menu list by replying 1.
 
 ## Result/Output (Screenshot of the output)
 
