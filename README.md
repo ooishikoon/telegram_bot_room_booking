@@ -65,17 +65,17 @@ password is provided in order to log in. Along the process, user may reply "0" b
 3. Update Personal Info
 
 After log in, user may reply "1" and enter the numbering of user's information they want to edit. User need to enter the
-new information and the usr information will be updated successfully and the bot will send the latest info of user. 
+new information and the user information will be updated successfully and the bot will send the latest info of user. 
 Along the process, user may reply "0" back to main menu.
 
 4. Book New Room
 
 After log in, user may reply "2" to perform book room action. User need to enter the date they wish to have booking. 
-User are only allow to book room within 10 days so if user book room exceed 10 days duration, the bot will inform user
+User are only allow to book room within 10 days so if user enter date exceed 10 days duration, the bot will inform user
 that the date is not available yet. After user input valid date, the bot will list the slot available with room ID, 
-room type, booking date and time. User may reply room ID for the slot that they desired. Then, user need to input their
-booking purpose and reply "1" to confirm their booking. Then, user booking is confirmed. Along the process, user may 
-reply "0" back to main menu.
+room type, booking date and time on the date input by user. User may reply room ID for the slot that they desired. 
+Then, user need to input their booking purpose and reply "1" to confirm their booking. Then, user booking is confirmed. 
+Along the process, user may reply "0" back to main menu.
 
 Admin
 
