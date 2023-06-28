@@ -3,13 +3,13 @@
 
 ## Group Info:
 
-| No. | Photo                           | Name                  | Matric Number | Semester | Phone Number |
-| ------------- |---------------------------------|-----------------------|---------------|----------|--------------|
-|1.| <img src= "images/siew_chin.jpg" width=100> | Loh Siew Chin         | 278723        | 5        | 017-4918235  |
-|2.| <img src= "images/zhi_yi.jpg" width=100> | Teoh Zhi Yi           | 278645        | 5        | 018-2014036  |
-|3.| <img src= "images/shi_koon.jpg" width=100>  | Ooi Shi Koon          | 277290        | 5        | 017-5774491  |
-|4.| <img src= "images/fanny.jpg" width=100> | Fanny Tang Tung Huong | 278366        | 5        | 011-51103470 |
-|5.| <img src= "images/zhun_wei.JPG" width=100> | Lim Zhun Wei          | 279632        | 5        | 014-7461218  |
+| No. | Photo                                        | Name                  | Matric Number | Semester | Phone Number |
+| ------------- |----------------------------------------------|-----------------------|---------------|----------|--------------|
+|1.| <img src= "images/siew_chin.jpg" width=100>  | Loh Siew Chin         | 278723        | 5        | 017-4918235  |
+|2.| <img src= "images/zhi_yi.jpg" width=100>     | Teoh Zhi Yi           | 278645        | 5        | 018-2014036  |
+|3.| <img src= "images/shikoon.jpg" width=100>    | Ooi Shi Koon          | 277290        | 5        | 017-5774491  |
+|4.| <img src= "images/fanny.jpg" width=100>      | Fanny Tang Tung Huong | 278366        | 5        | 011-51103470 |
+|5.| <img src= "images/zhun_wei.JPG" width=100>   | Lim Zhun Wei          | 279632        | 5        | 014-7461218  |
 
 ## Title of your application
 
